@@ -1,517 +1,3091 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elisângela | Segurança do Trabalho</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f4f6f8; color: #222; }
-        header { background: #071522; color: white; padding: 18px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
-        .logo { font-size: 22px; font-weight: bold; }
-        nav a { color: white; text-decoration: none; margin-left: 20px; }
-        nav a:hover { color: #4da3ff; }
-        
-        /* Área Pública e Foto */
-        .hero { min-height: 650px; background: linear-gradient(135deg, #071522, #12395a); color: white; display: flex; align-items: center; justify-content: center; padding: 60px 25px; }
-        .hero-content { max-width: 1100px; width: 100%; display: flex; align-items: center; gap: 60px; }
-        
-        .foto-area { text-align: center; }
-        .foto { width: 350px; height: 440px; object-fit: cover; border-radius: 20px; border: 5px solid white; box-shadow: 0 10px 35px rgba(0,0,0,0.4); background: #ddd; }
-        .selecionar { display: block; margin: 18px auto 0; background: #198754; color: white; padding: 13px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 220px; }
-        .selecionar:hover { background: #146c43; }
-        #fotoInput { display: none; }
-        
-        .texto h1 { font-size: 55px; margin-bottom: 8px; }
-        .texto h2 { color: #4da3ff; font-size: 28px; margin-bottom: 25px; }
-        .texto p { font-size: 19px; line-height: 1.7; color: #e5edf5; margin-bottom: 12px; }
-        .botao { display: inline-block; padding: 15px 25px; background: #198754; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; margin-top: 15px; }
-        .botao:hover { filter: brightness(1.1); }
-        
-        /* Seções e Cards */
-        .secao { max-width: 1100px; margin: auto; padding: 70px 25px; }
-        .titulo { text-align: center; margin-bottom: 40px; }
-        .titulo h2 { font-size: 34px; color: #071522; }
-        .titulo p { color: #555; margin-top: 10px; font-size: 18px; }
-        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
-        .card { background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .icone { font-size: 45px; margin-bottom: 15px; }
-        .palestras-bg { background: #eef5fa; }
-        
-        /* Contato */
-        .contato { background: #12395a; color: white; text-align: center; padding: 70px 25px; }
-        .contato-botoes { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
-        
-        /* Painel Admin */
-        .admin-box { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .input-group { width: 100%; padding: 14px; margin: 8px 0 15px; border: 1px solid #ccc; border-radius: 6px; }
-        #painel { display: none; }
-        .painel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
-        .painel-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .grid-almox { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .col-span-2 { grid-column: span 2; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; font-size: 14px; }
-        th { background: #071522; color: white; }
-        .recusou { background-color: #ffcccc; color: #900; font-weight: bold; }
-        
-        /* Assinatura Canvas */
-        .canvas-container { border: 2px dashed #ccc; background: #fff; border-radius: 8px; width: 100%; height: 150px; overflow: hidden; position: relative; margin-bottom: 10px; }
-        canvas { width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
-        .img-assinatura { max-height: 50px; border-bottom: 1px solid #000; padding-bottom: 5px; }
 
-        @media (max-width: 800px) {
-            .hero-content, .painel-grid, .grid-almox { flex-direction: column; grid-template-columns: 1fr; }
-            .col-span-2 { grid-column: span 1; }
-            header { flex-direction: column; gap: 15px; }
-        }
-    </style>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Elisângela | Segurança do Trabalho</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#172033;
+}
+
+header{
+    background:#071b33;
+    color:white;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 3px 15px rgba(0,0,0,.2);
+}
+
+.logo{
+    font-size:21px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#39a9ff;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:#39a9ff;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.hero{
+    background:
+    linear-gradient(135deg,#071b33,#0d3763);
+    color:white;
+    padding:80px 0;
+}
+
+.hero-content{
+    display:grid;
+    grid-template-columns:1fr 330px;
+    gap:50px;
+    align-items:center;
+}
+
+.hero h1{
+    font-size:46px;
+    margin-bottom:15px;
+}
+
+.hero h1 span{
+    color:#42b4ff;
+}
+
+.hero p{
+    font-size:19px;
+    line-height:1.6;
+    color:#d8e7f5;
+}
+
+.profile-box{
+    text-align:center;
+}
+
+.profile-photo{
+    width:270px;
+    height:270px;
+    border-radius:50%;
+    object-fit:cover;
+    border:7px solid white;
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+    background:#dbe7f2;
+}
+
+.photo-button{
+    display:inline-block;
+    margin-top:15px;
+    padding:10px 18px;
+    border-radius:8px;
+    background:#178be6;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.photo-button:hover{
+    background:#0871c2;
+}
+
+#fotoInput{
+    display:none;
+}
+
+section{
+    padding:65px 0;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.section-title h2{
+    font-size:32px;
+    color:#071b33;
+}
+
+.section-title p{
+    margin-top:10px;
+    color:#64748b;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:28px;
+    box-shadow:0 5px 22px rgba(0,0,0,.07);
+    border:1px solid #e4eaf1;
+}
+
+.card h3{
+    color:#0876c9;
+    margin-bottom:12px;
+}
+
+.card p{
+    color:#64748b;
+    line-height:1.6;
+}
+
+.contact{
+    background:#071b33;
+    color:white;
+}
+
+.contact .section-title h2{
+    color:white;
+}
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.contact-card{
+    background:#0d2b4e;
+    padding:22px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.contact-card a{
+    color:white;
+    text-decoration:none;
+}
+
+.admin-login{
+    max-width:450px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 25px rgba(0,0,0,.08);
+}
+
+.admin-login h2{
+    margin-bottom:20px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #d5dde7;
+    border-radius:8px;
+    margin-top:7px;
+    margin-bottom:15px;
+    outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#178be6;
+}
+
+button{
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-primary{
+    background:#0876c9;
+    color:white;
+}
+
+.btn-primary:hover{
+    background:#075d9d;
+}
+
+.btn-danger{
+    background:#dc3545;
+    color:white;
+}
+
+.btn-success{
+    background:#198754;
+    color:white;
+}
+
+.btn-secondary{
+    background:#64748b;
+    color:white;
+}
+
+.admin{
+    display:none;
+    padding:40px 0 80px;
+}
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:35px;
+}
+
+.stat{
+    background:white;
+    border-radius:14px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.stat h3{
+    color:#64748b;
+    font-size:14px;
+}
+
+.stat strong{
+    display:block;
+    font-size:35px;
+    margin-top:10px;
+    color:#0876c9;
+}
+
+.admin-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.admin-card{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+    overflow:hidden;
+}
+
+.admin-card h2{
+    margin-bottom:20px;
+    color:#071b33;
+}
+
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th,
+td{
+    padding:12px;
+    border-bottom:1px solid #e5eaf0;
+    text-align:left;
+    font-size:14px;
+}
+
+th{
+    background:#f0f5fa;
+    color:#071b33;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.badge-ok{
+    background:#d1f3df;
+    color:#08743c;
+}
+
+.badge-no{
+    background:#ffd9dd;
+    color:#a71929;
+}
+
+.badge-pendente{
+    background:#fff1c7;
+    color:#876400;
+}
+
+.signature-box{
+    border:2px dashed #bbc7d4;
+    border-radius:8px;
+    height:180px;
+    position:relative;
+    background:#fff;
+}
+
+#signatureCanvas{
+    width:100%;
+    height:100%;
+    touch-action:none;
+}
+
+.signature-buttons{
+    margin-top:10px;
+    display:flex;
+    gap:10px;
+}
+
+.alert{
+    padding:14px;
+    border-radius:8px;
+    margin-bottom:15px;
+    display:none;
+}
+
+.alert-success{
+    background:#d1f3df;
+    color:#08743c;
+}
+
+.alert-error{
+    background:#ffd9dd;
+    color:#a71929;
+}
+
+footer{
+    background:#031120;
+    color:#b8c5d3;
+    text-align:center;
+    padding:25px;
+    font-size:14px;
+}
+
+.hidden{
+    display:none !important;
+}
+
+@media(max-width:900px){
+
+    .hero-content{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .dashboard{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .admin-grid{
+        grid-template-columns:1fr;
+    }
+
+    .contact-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    header{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    nav a{
+        margin:0 6px;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .cards,
+    .dashboard,
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+
+    .profile-photo{
+        width:220px;
+        height:220px;
+    }
+
+}
+
+</style>
+
 </head>
+
 <body>
 
-    <header>
-        <div class="logo">🦺 Segurança do Trabalho</div>
-        <nav>
-            <a href="#inicio">Início</a>
-            <a href="#assessoria">Consultoria</a>
-            <a href="#palestras">Treinamentos</a>
-            <a href="#contato">Contato</a>
-            <a href="#admin">🔐 Área Admin</a>
-        </nav>
-    </header>
+<header>
 
-    <!-- Área Pública -->
-    <section class="hero" id="inicio">
-        <div class="hero-content">
-            
-            <div class="foto-area">
-                <img id="fotoPerfil" class="foto" alt="Foto de Elisângela">
-                <label class="selecionar" for="fotoInput">📷 Selecionar minha foto</label>
-                <input type="file" id="fotoInput" accept="image/*">
-            </div>
+<div class="logo">
+Elisângela <span>| Segurança do Trabalho</span>
+</div>
 
-            <div class="texto">
-                <h1>Elisângela</h1>
-                <h2>Técnica de Segurança do Trabalho</h2>
-                <p>Atuação profissional voltada à prevenção de acidentes, proteção dos trabalhadores e promoção de ambientes de trabalho mais seguros.</p>
-                <a class="botao" href="#contato">📞 Fale Comigo</a>
-            </div>
-        </div>
-    </section>
+<nav>
 
-    <!-- Assessoria e Consultoria -->
-    <section class="secao" id="assessoria">
-        <div class="titulo"><h2>📊 Assessoria e Consultoria</h2></div>
-        <div class="cards">
-            <div class="card"><div class="icone">📄</div><h3>PGR e PCMSO</h3><p>Elaboração e gestão do Programa de Gerenciamento de Riscos e Saúde Ocupacional.</p></div>
-            <div class="card"><div class="icone">🔍</div><h3>Auditorias</h3><p>Mapeamento de riscos para garantir a conformidade legal da sua empresa.</p></div>
-            <div class="card"><div class="icone">🏗️</div><h3>Laudos Técnicos</h3><p>Emissão de laudos de insalubridade, periculosidade e LTCAT.</p></div>
-            <div class="card"><div class="icone">🤝</div><h3>Terceirizados</h3><p>Controle de documentação de segurança de empresas parceiras.</p></div>
-        </div>
-    </section>
+<a href="#inicio">Início</a>
+<a href="#servicos">Serviços</a>
+<a href="#treinamentos">Treinamentos</a>
+<a href="#contato">Contato</a>
+<a href="#administracao">Administração</a>
 
-    <!-- Treinamentos -->
-    <section class="secao palestras-bg" id="palestras">
-        <div class="titulo"><h2>🎓 Palestras e Treinamentos</h2></div>
-        <div class="cards">
-            <div class="card"><div class="icone">🗣️</div><h3>DDS</h3><p>Diálogo Diário de Segurança com temas rápidos para a rotina.</p></div>
-            <div class="card"><div class="icone">📅</div><h3>SIPAT</h3><p>Palestras dinâmicas para a Semana de Prevenção de Acidentes.</p></div>
-            <div class="card"><div class="icone">⚖️</div><h3>Conduta</h3><p>Treinamentos de comportamento e regras no ambiente de trabalho.</p></div>
-            <div class="card"><div class="icone">🦺</div><h3>NRs</h3><p>Capacitação técnica exigida por lei (Trabalho em Altura, EPIs, etc).</p></div>
-        </div>
-    </section>
+</nav>
 
-    <!-- Contato -->
-    <section class="contato" id="contato">
-        <h2>📞 Como posso ajudar sua empresa?</h2>
-        <div class="contato-botoes">
-            <!-- LINKS ATUALIZADOS AQUI -->
-            <a class="botao" href="https://wa.me/5511962876367" target="_blank" style="background: #25D366;">💬 WhatsApp</a>
-            <a class="botao" href="mailto:elisangela.jr22@gmail.com" style="background: #ea4335;">✉️ E-mail</a>
-            <a class="botao" href="https://www.linkedin.com/in/elisangela-rodrigues" target="_blank" style="background: #0a66c2;">🔗 LinkedIn</a>
-            <a class="botao" href="https://instagram.com/elisangela.jr" target="_blank" style="background: #E1306C;">📷 Instagram</a>
-        </div>
-    </section>
+</header>
 
-    <!-- Login Admin -->
-    <section id="admin" class="secao">
-        <div class="titulo"><h2>🔐 Área Administrativa</h2></div>
-        <div class="admin-box">
-            <label>E-mail</label>
-            <input id="adminEmail" type="email" class="input-group" placeholder="Seu e-mail de acesso">
-            <label>Senha</label>
-            <input id="adminSenha" type="password" class="input-group" placeholder="Sua senha">
-            <button onclick="entrarAdmin()" class="botao" style="background: #071522; width: 100%;">Entrar no Sistema</button>
-        </div>
-    </section>
 
-    <!-- Painel de Controle -->
-    <section id="painel" class="secao">
-        <div class="titulo"><h2>⚙️ Painel de Gestão (Nuvem)</h2></div>
-        
-        <div class="painel-grid">
-            
-            <!-- Agenda DDS / SIPAT -->
-            <div class="painel-card col-span-2" style="background: #fff8e1; border-left: 5px solid #ffb300;">
-                <h3>📅 Agenda de DDS e SIPAT</h3>
-                <div class="grid-almox">
-                    <select id="tipoEvento" class="input-group">
-                        <option value="DDS">DDS (Diálogo Diário)</option>
-                        <option value="SIPAT">SIPAT (Semana Interna)</option>
-                        <option value="Treinamento">Treinamento Específico</option>
-                    </select>
-                    <input type="date" id="dataEvento" class="input-group">
-                    <input type="text" id="temaEvento" class="input-group col-span-2" placeholder="Tema ou Assunto do Evento...">
-                </div>
-                <button onclick="cadastrarEvento()" class="botao" style="width: 100%; margin-top:0; background:#ffb300; color:#000;">Agendar Evento</button>
-                <div style="overflow-x: auto;">
-                    <table style="margin-top: 20px;">
-                        <thead><tr><th>Tipo</th><th>Data</th><th>Tema</th><th>Ação</th></tr></thead>
-                        <tbody id="tabelaEventos"></tbody>
-                    </table>
-                </div>
-            </div>
+<!-- =====================================================
+INÍCIO
+===================================================== -->
 
-            <!-- Cadastro de Funcionários -->
-            <div class="painel-card col-span-2">
-                <h3>👥 Cadastro de Funcionários</h3>
-                <div class="grid-almox">
-                    <input type="text" id="nomeFuncionario" class="input-group col-span-2" placeholder="Nome Completo">
-                </div>
-                <button onclick=async function cadastrarFuncionario() {
-    const nomeInput = document.getElementById("funcNome");
+<section class="hero" id="inicio">
 
-    if (!nomeInput) {
-        alert("Campo de funcionário não encontrado.");
+<div class="container hero-content">
+
+<div>
+
+<h1>
+Segurança do Trabalho
+<br>
+<span>com responsabilidade e prevenção.</span>
+</h1>
+
+<p>
+Olá! Eu sou <strong>Elisângela</strong>,
+Técnica de Segurança do Trabalho.
+Este espaço foi criado para acompanhar,
+organizar e fortalecer a segurança dos
+trabalhadores.
+</p>
+
+<br>
+
+<a href="#contato">
+<button class="btn-primary">
+Entrar em contato
+</button>
+</a>
+
+</div>
+
+
+<div class="profile-box">
+
+<img
+id="fotoPerfil"
+class="profile-photo"
+src="https://via.placeholder.com/400x400.png?text=Elisangela"
+alt="Elisângela - Técnica de Segurança do Trabalho"
+>
+
+<br>
+
+<label
+for="fotoInput"
+class="photo-button"
+>
+📷 Alterar minha foto
+</label>
+
+<input
+type="file"
+id="fotoInput"
+accept="image/*"
+>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+SERVIÇOS
+===================================================== -->
+
+<section id="servicos">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>Serviços</h2>
+
+<p>
+Prevenção, orientação e gestão de segurança.
+</p>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+
+<h3>🦺 Gestão de EPI</h3>
+
+<p>
+Controle de entrega, registro, aceite,
+recusa e acompanhamento dos equipamentos
+de proteção individual.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>📋 Inspeções</h3>
+
+<p>
+Inspeções de segurança, identificação
+de riscos e acompanhamento das ações
+corretivas.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>📚 Treinamentos</h3>
+
+<p>
+Treinamentos e orientações para
+conscientização dos trabalhadores.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>⚠️ Gestão de Riscos</h3>
+
+<p>
+Acompanhamento dos riscos existentes
+nas atividades e ambientes de trabalho.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>📊 Documentação</h3>
+
+<p>
+Organização dos registros relacionados
+à Segurança e Saúde do Trabalho.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>👷 Acompanhamento</h3>
+
+<p>
+Acompanhamento das condições de segurança
+e orientação das equipes.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+TREINAMENTOS
+===================================================== -->
+
+<section id="treinamentos">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>Treinamentos</h2>
+
+<p>
+Capacitação é uma das principais ferramentas
+de prevenção.
+</p>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+<h3>🪜 Trabalho em Altura</h3>
+<p>
+Orientação sobre prevenção de quedas,
+uso correto dos equipamentos e procedimentos
+de segurança.
+</p>
+</div>
+
+<div class="card">
+<h3>🦺 Utilização de EPI</h3>
+<p>
+Orientação sobre seleção, utilização,
+conservação e responsabilidades relacionadas
+aos EPIs.
+</p>
+</div>
+
+<div class="card">
+<h3>🚜 Operação Segura</h3>
+<p>
+Treinamentos voltados à operação segura
+de equipamentos e máquinas.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+CONTATO
+===================================================== -->
+
+<section class="contact" id="contato">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>Entre em contato</h2>
+
+<p>
+Fale diretamente com Elisângela.
+</p>
+
+</div>
+
+
+<div class="contact-grid">
+
+<div class="contact-card">
+
+<h3>📱 WhatsApp</h3>
+
+<br>
+
+<a
+href="https://wa.me/5511962876367"
+target="_blank"
+>
+Enviar mensagem
+</a>
+
+</div>
+
+
+<div class="contact-card">
+
+<h3>📧 E-mail</h3>
+
+<br>
+
+<a
+href="mailto:elisangela.jr22@gmail.com"
+>
+Enviar e-mail
+</a>
+
+</div>
+
+
+<div class="contact-card">
+
+<h3>💼 LinkedIn</h3>
+
+<br>
+
+<a
+href="https://www.linkedin.com/in/elisangela-rodrigues"
+target="_blank"
+>
+Meu LinkedIn
+</a>
+
+</div>
+
+
+<div class="contact-card">
+
+<h3>📸 Instagram</h3>
+
+<br>
+
+<a
+href="https://instagram.com/elisangela.jr"
+target="_blank"
+>
+Meu Instagram
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+LOGIN
+===================================================== -->
+
+<section id="administracao">
+
+<div class="container">
+
+<div class="admin-login" id="loginBox">
+
+<h2>🔐 Administração</h2>
+
+<p>
+Acesso restrito ao responsável pelo sistema.
+</p>
+
+<br>
+
+<div
+id="loginAlert"
+class="alert alert-error"
+></div>
+
+
+<label>E-mail</label>
+
+<input
+type="email"
+id="loginEmail"
+placeholder="Seu e-mail"
+>
+
+
+<label>Senha</label>
+
+<input
+type="password"
+id="loginPassword"
+placeholder="Sua senha"
+>
+
+
+<button
+class="btn-primary"
+style="width:100%"
+onclick="fazerLogin()"
+>
+Entrar
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+PAINEL ADMINISTRATIVO
+===================================================== -->
+
+<section class="admin" id="painelAdmin">
+
+<div class="container">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+flex-wrap:wrap;
+gap:10px;
+">
+
+<div>
+
+<h1>
+Painel de Segurança
+</h1>
+
+<p>
+Gestão dos funcionários, EPIs e treinamentos.
+</p>
+
+</div>
+
+<button
+class="btn-danger"
+onclick="sair()"
+>
+Sair
+</button>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div class="dashboard">
+
+<div class="stat">
+
+<h3>Funcionários</h3>
+
+<strong id="totalFuncionarios">
+0
+</strong>
+
+</div>
+
+
+<div class="stat">
+
+<h3>EPIs entregues</h3>
+
+<strong id="totalEpis">
+0
+</strong>
+
+</div>
+
+
+<div class="stat">
+
+<h3>Aceites</h3>
+
+<strong id="totalAceites">
+0
+</strong>
+
+</div>
+
+
+<div class="stat">
+
+<h3>Eventos</h3>
+
+<strong id="totalEventos">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="admin-grid">
+
+
+<!-- =====================================================
+FUNCIONÁRIOS
+===================================================== -->
+
+<div class="admin-card">
+
+<h2>👷 Cadastro de Funcionários</h2>
+
+<div
+id="funcAlert"
+class="alert"
+></div>
+
+
+<label>Nome completo</label>
+
+<input
+id="funcNome"
+type="text"
+placeholder="Nome do funcionário"
+>
+
+
+<label>Telefone</label>
+
+<input
+id="funcTel"
+type="text"
+placeholder="Telefone"
+>
+
+
+<label>E-mail</label>
+
+<input
+id="funcEmail"
+type="email"
+placeholder="E-mail"
+>
+
+
+<button
+class="btn-primary"
+onclick="salvarFuncionario()"
+>
+💾 Salvar funcionário
+</button>
+
+<button
+class="btn-secondary hidden"
+id="cancelarEdicao"
+onclick="cancelarEdicaoFuncionario()"
+>
+Cancelar
+</button>
+
+<input
+type="hidden"
+id="funcId"
+/>
+
+</div>
+
+
+<!-- =====================================================
+ENTREGA EPI
+===================================================== -->
+
+<div class="admin-card">
+
+<h2>🦺 Entrega de EPI</h2>
+
+<div
+id="epiAlert"
+class="alert"
+></div>
+
+
+<label>Funcionário</label>
+
+<select id="epiFuncionario">
+
+<option value="">
+Selecione o funcionário
+</option>
+
+</select>
+
+
+<label>EPI</label>
+
+<input
+id="epiNome"
+type="text"
+placeholder="Ex.: Capacete de segurança"
+>
+
+
+<label>CA</label>
+
+<input
+id="epiCA"
+type="text"
+placeholder="Certificado de Aprovação"
+>
+
+
+<label>Data</label>
+
+<input
+id="epiData"
+type="date"
+>
+
+
+<label>Qualidade / condição</label>
+
+<select id="epiQualidade">
+
+<option value="Novo">
+Novo
+</option>
+
+<option value="Bom">
+Bom estado
+</option>
+
+<option value="Substituição">
+Substituição
+</option>
+
+</select>
+
+
+<label>Assinatura</label>
+
+<div class="signature-box">
+
+<canvas id="signatureCanvas"></canvas>
+
+</div>
+
+
+<div class="signature-buttons">
+
+<button
+class="btn-secondary"
+onclick="limparAssinatura()"
+>
+Limpar
+</button>
+
+<button
+class="btn-primary"
+onclick="salvarEPI()"
+>
+Registrar entrega
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+ACEITE
+===================================================== -->
+
+<div class="admin-card">
+
+<h2>✅ Aceite / Recusa de EPI</h2>
+
+<div
+id="aceiteAlert"
+class="alert"
+></div>
+
+
+<label>Funcionário</label>
+
+<select id="aceiteFuncionario">
+
+<option value="">
+Selecione
+</option>
+
+</select>
+
+
+<label>EPI</label>
+
+<input
+id="aceiteEPI"
+type="text"
+placeholder="Nome do EPI"
+>
+
+
+<label>Status</label>
+
+<select id="aceiteStatus">
+
+<option value="ACEITO">
+✅ ACEITO
+</option>
+
+<option value="RECUSADO">
+❌ RECUSADO
+</option>
+
+</select>
+
+
+<label>Data</label>
+
+<input
+id="aceiteData"
+type="date"
+>
+
+
+<button
+class="btn-primary"
+onclick="salvarAceite()"
+>
+Registrar
+</button>
+
+</div>
+
+
+<!-- =====================================================
+EVENTOS
+===================================================== -->
+
+<div class="admin-card">
+
+<h2>📅 Eventos / Treinamentos</h2>
+
+<div
+id="eventoAlert"
+class="alert"
+></div>
+
+
+<label>Tipo</label>
+
+<select id="eventoTipo">
+
+<option>
+Treinamento
+</option>
+
+<option>
+DDS
+</option>
+
+<option>
+Palestra
+</option>
+
+<option>
+Inspeção
+</option>
+
+<option>
+Reunião
+</option>
+
+</select>
+
+
+<label>Data</label>
+
+<input
+id="eventoData"
+type="date"
+>
+
+
+<label>Tema</label>
+
+<input
+id="eventoTema"
+type="text"
+placeholder="Tema do evento"
+>
+
+
+<button
+class="btn-primary"
+onclick="salvarEvento()"
+>
+Cadastrar evento
+</button>
+
+</div>
+
+</div>
+
+
+<br><br>
+
+
+<!-- =====================================================
+TABELA FUNCIONÁRIOS
+===================================================== -->
+
+<div class="admin-card">
+
+<h2>👷 Funcionários cadastrados</h2>
+
+<input
+id="buscarFuncionario"
+type="text"
+placeholder="🔎 Pesquisar funcionário..."
+oninput="filtrarFuncionarios()"
+>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Nome</th>
+<th>Telefone</th>
+<th>E-mail</th>
+<th>Ações</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaFuncionarios">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<!-- =====================================================
+TABELA EPI
+===================================================== -->
+
+<div class="admin-card">
+
+<h2>🦺 Histórico de EPIs</h2>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Data</th>
+<th>Funcionário</th>
+<th>EPI</th>
+<th>CA</th>
+<th>Qualidade</th>
+<th>Assinatura</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaEPI">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<!-- =====================================================
+TABELA ACEITES
+===================================================== -->
+
+<div class="admin-card">
+
+<h2>✅ Controle de Aceite / Recusa</h2>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Data</th>
+<th>Funcionário</th>
+<th>EPI</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaAceites">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<!-- =====================================================
+TABELA EVENTOS
+===================================================== -->
+
+<div class="admin-card">
+
+<h2>📅 Eventos cadastrados</h2>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Tipo</th>
+<th>Data</th>
+<th>Tema</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaEventos">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+© 2026 Elisângela | Técnica de Segurança do Trabalho
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+CONFIGURAÇÃO SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+'https://tqvavpchzdcsgwudileu.supabase.co';
+
+const SUPABASE_KEY =
+'sb_publishable_ik7CAx549Dy2fj_d8xMrAA_YX8vo3vm';
+
+const _supabase =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =====================================================
+VARIÁVEIS
+===================================================== */
+
+let funcionarios = [];
+
+let funcionarioEditando = null;
+
+let desenhando = false;
+
+let ctx;
+
+
+/* =====================================================
+UTILITÁRIOS
+===================================================== */
+
+function hoje(){
+
+    const d = new Date();
+
+    return d.toISOString().split('T')[0];
+
+}
+
+
+function mostrarAlerta(id, mensagem, sucesso=true){
+
+    const el =
+        document.getElementById(id);
+
+    if(!el) return;
+
+    el.textContent = mensagem;
+
+    el.className =
+        sucesso
+        ? "alert alert-success"
+        : "alert alert-error";
+
+    el.style.display = "block";
+
+    setTimeout(() => {
+
+        el.style.display = "none";
+
+    },5000);
+
+}
+
+
+function escaparHTML(texto){
+
+    if(texto === null || texto === undefined)
+        return "";
+
+    return String(texto)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* =====================================================
+LOGIN SUPABASE AUTH
+===================================================== */
+
+async function fazerLogin(){
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    if(!email || !password){
+
+        mostrarAlerta(
+            "loginAlert",
+            "Digite seu e-mail e sua senha.",
+            false
+        );
+
         return;
     }
 
-    const nome = nomeInput.value.trim();
 
-    if (!nome) {
-        alert("Digite o nome do funcionário.");
-        nomeInput.focus();
+    const {data,error} =
+        await _supabase.auth.signInWithPassword({
+
+            email:email,
+
+            password:password
+
+        });
+
+
+    if(error){
+
+        console.error(error);
+
+        mostrarAlerta(
+            "loginAlert",
+            "E-mail ou senha incorretos: " +
+            error.message,
+            false
+        );
+
         return;
     }
 
-    try {
-        const { data, error } = await _supabase
+
+    mostrarPainel();
+
+}
+
+
+async function sair(){
+
+    await _supabase.auth.signOut();
+
+    document
+        .getElementById("painelAdmin")
+        .style.display="none";
+
+    document
+        .getElementById("loginBox")
+        .style.display="block";
+
+    window.location.hash =
+        "administracao";
+
+}
+
+
+async function verificarLogin(){
+
+    const {
+        data:{
+            session
+        }
+    } =
+        await _supabase.auth.getSession();
+
+
+    if(session){
+
+        mostrarPainel();
+
+    }
+
+}
+
+
+function mostrarPainel(){
+
+    document
+        .getElementById("loginBox")
+        .style.display="none";
+
+    document
+        .getElementById("painelAdmin")
+        .style.display="block";
+
+    carregarTudo();
+
+}
+
+
+/* =====================================================
+FUNCIONÁRIOS
+===================================================== */
+
+async function salvarFuncionario(){
+
+    const nome =
+        document.getElementById("funcNome")
+        .value.trim();
+
+    const tel =
+        document.getElementById("funcTel")
+        .value.trim();
+
+    const email =
+        document.getElementById("funcEmail")
+        .value.trim();
+
+
+    if(!nome){
+
+        mostrarAlerta(
+            "funcAlert",
+            "Digite o nome do funcionário.",
+            false
+        );
+
+        return;
+    }
+
+
+    if(funcionarioEditando){
+
+        const {
+            data,
+            error
+        } =
+            await _supabase
             .from("funcionarios")
-            .insert([
-                {
-                    nome: nome
-                }
-            ])
+            .update({
+
+                nome:nome,
+                tel:tel,
+                email:email
+
+            })
+            .eq(
+                "id",
+                funcionarioEditando
+            )
             .select();
 
-        if (error) {
-            console.error("Erro ao cadastrar funcionário:", error);
 
-            alert(
-                "ERRO AO SALVAR FUNCIONÁRIO\n\n" +
-                "Código: " + (error.code || "N/A") + "\n" +
-                "Mensagem: " + error.message
+        if(error){
+
+            console.error(error);
+
+            mostrarAlerta(
+                "funcAlert",
+                "Erro ao atualizar: " +
+                error.message,
+                false
             );
 
             return;
         }
 
-        console.log("Funcionário cadastrado:", data);
 
-        alert("Funcionário cadastrado com sucesso!");
-
-        nomeInput.value = "";
-
-        await carregarDados();
-
-    } catch (erro) {
-        console.error("Erro inesperado:", erro);
-
-        alert(
-            "Ocorreu um erro inesperado ao cadastrar o funcionário.\n\n" +
-            erro.message
+        mostrarAlerta(
+            "funcAlert",
+            "Funcionário atualizado com sucesso!"
         );
+
+
+        cancelarEdicaoFuncionario();
+
     }
-}
-            
-            <!-- Almoxarifado -->
-            <div class="painel-card col-span-2" style="background: #eef5fa; border-left: 5px solid #198754;">
-                <h3>📦 Saída de EPI com Assinatura</h3>
-                <div class="grid-almox">
-                    <select id="almoxFuncionario" class="input-group"><option value="">Carregando...</option></select>
-                    <input type="text" id="almoxEPI" class="input-group" placeholder="EPI Retirado">
-                    <input type="text" id="almoxCA" class="input-group" placeholder="Nº do CA">
-                </div>
-                <p style="margin: 10px 0 5px; font-weight: bold;">✍️ Assinatura do Funcionário:</p>
-                <div class="canvas-container"><canvas id="assinaturaCanvas"></canvas></div>
-                <button onclick="limparCanvas()" style="background: #999; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Limpar Quadro</button>
-                <button onclick="registrarAlmoxarifado()" class="botao" style="width: 100%; margin-top:15px;">Registrar Saída</button>
-                
-                <div style="overflow-x: auto; margin-top: 20px;">
-                    <table>
-                        <thead><tr><th>Data</th><th>Funcionário</th><th>EPI</th><th>CA</th><th>Assinatura</th><th>Ação</th></tr></thead>
-                        <tbody id="tabelaAlmox"></tbody>
-                    </table>
-                </div>
-            </div>
 
-            <!-- Aceite / Recusa -->
-            <div class="painel-card">
-                <h3>🦺 Aceite / Recusa de EPI</h3>
-                <select id="selectFuncionario" class="input-group"><option value="">Carregando...</option></select>
-                <input type="text" id="nomeEPI" class="input-group" placeholder="Nome do EPI">
-                <select id="statusEPI" class="input-group">
-                    <option value="ACEITOU">✅ ACEITOU</option>
-                    <option value="RECUSOU">❌ RECUSOU</option>
-                </select>
-                <button onclick="registrarEPI()" class="botao" style="width: 100%; margin-top:0;">Registrar Resposta</button>
-            </div>
+    else{
 
-            <!-- Histórico Aceite / Recusa -->
-            <div class="painel-card">
-                <h3>📋 Histórico Aceite/Recusa</h3>
-                <div style="overflow-x: auto;">
-                    <table>
-                        <thead><tr><th>Data</th><th>Func.</th><th>EPI</th><th>Status</th><th>Ação</th></tr></thead>
-                        <tbody id="tabelaEPIs"></tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <footer><p style="text-align:center; padding:20px; background:#071522; color:#aaa;">© 2026 Elisângela - Técnica de Segurança do Trabalho</p></footer>
-
-    <script>
-        // CONFIGURAÇÃO DA FOTO
-        const fotoInput = document.getElementById("fotoInput");
-        const fotoPerfil = document.getElementById("fotoPerfil");
-        
-        if (localStorage.getItem("foto_elisangela")) {
-            fotoPerfil.src = localStorage.getItem("foto_elisangela");
-        } else {
-            fotoPerfil.src = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="350" height="440"><rect width="100%" height="100%" fill="#dddddd"/><text x="50%" y="50%" text-anchor="middle" font-family="Arial" font-size="22" fill="#555">Sua Foto Aqui</text></svg>`);
-        }
-
-        fotoInput.addEventListener("change", function () {
-            const leitor = new FileReader();
-            leitor.onload = e => { 
-                fotoPerfil.src = e.target.result; 
-                localStorage.setItem("foto_elisangela", e.target.result); 
-            };
-            if(this.files[0]) leitor.readAsDataURL(this.files[0]);
-        });
-
-        // CONFIGURAÇÃO DO SUPABASE
-        const supabaseUrl = 'https://tqvavpchzdcsgwudileu.supabase.co';
-        const supabaseKey = 'sb_publishable_ik7CAx549Dy2fj_d8xMrAA_YX8vo3vm'; 
-        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-        // LOGIN ATUALIZADO (Exige E-mail e Senha)
-        function entrarAdmin() {
-            const email = document.getElementById("adminEmail").value.trim();
-            const senha = document.getElementById("adminSenha").value;
-
-            if (email === "elisangelajr22@gmail.com" && senha === "e20t11g81@") {
-                document.getElementById("admin").style.display = "none";
-                document.getElementById("painel").style.display = "block";
-                carregarDados();
-                setTimeout(ajustarCanvas, 300);
-            } else {
-                alert("E-mail ou senha incorretos! Tente novamente.");
-            }
-        }
-
-        // FUNÇÕES DO BANCO DE DADOS
-        async function async function carregarDados() {
-
-    try {
-
-        const { data: funcionarios, error: erroFuncionarios } =
+        const {
+            data,
+            error
+        } =
             await _supabase
-                .from("funcionarios")
-                .select("*")
-                .order("id", { ascending: false });
+            .from("funcionarios")
+            .insert([{
 
-        if (erroFuncionarios) {
-            console.error("Erro ao carregar funcionários:", erroFuncionarios);
+                nome:nome,
+                tel:tel,
+                email:email
 
-            alert(
-                "Não foi possível carregar os funcionários.\n\n" +
-                erroFuncionarios.message
+            }])
+            .select();
+
+
+        if(error){
+
+            console.error(error);
+
+            mostrarAlerta(
+                "funcAlert",
+                "Erro ao salvar funcionário: " +
+                error.message,
+                false
             );
 
             return;
         }
 
-        console.log("Funcionários encontrados:", funcionarios);
 
-        const tabela = document.getElementById("tabelaFuncionarios");
-
-        if (tabela) {
-
-            tabela.innerHTML = "";
-
-            funcionarios.forEach(funcionario => {
-
-                const tr = document.createElement("tr");
-
-                tr.innerHTML = `
-                    <td>${funcionario.id}</td>
-                    <td>${funcionario.nome || ""}</td>
-                    <td>${funcionario.tel || ""}</td>
-                    <td>${funcionario.email || ""}</td>
-                `;
-
-                tabela.appendChild(tr);
-            });
-        }
-
-        // Atualiza os selects de funcionários
-        const selects = document.querySelectorAll(
-            "#funcEpi, #funcAceite, #funcEvento"
+        mostrarAlerta(
+            "funcAlert",
+            "Funcionário cadastrado com sucesso!"
         );
 
-        selects.forEach(select => {
-
-            if (!select) return;
-
-            const valorAtual = select.value;
-
-            select.innerHTML =
-                '<option value="">Selecione o funcionário</option>';
-
-            funcionarios.forEach(funcionario => {
-
-                const option = document.createElement("option");
-
-                option.value = funcionario.nome;
-                option.textContent = funcionario.nome;
-
-                select.appendChild(option);
-            });
-
-            select.value = valorAtual;
-        });
-
-    } catch (erro) {
-
-        console.error("Erro ao carregar dados:", erro);
-
-        alert(
-            "Erro ao carregar dados do sistema.\n\n" +
-            erro.message
-        );
     }
+
+
+    document.getElementById("funcNome").value="";
+    document.getElementById("funcTel").value="";
+    document.getElementById("funcEmail").value="";
+
+    funcionarioEditando=null;
+
+    document
+        .getElementById("funcId")
+        .value="";
+
+    document
+        .getElementById("cancelarEdicao")
+        .classList.add("hidden");
+
+
+    await carregarFuncionarios();
+
 }
 
-        // CADASTROS
-        async function cadastrarEvento() {
-            const tipo = document.getElementById("tipoEvento").value;
-            const dataRaw = document.getElementById("dataEvento").value;
-            const tema = document.getElementById("temaEvento").value.trim();
-            if(!dataRaw || !tema) return alert("Preencha a data e o tema!");
-            
-            const dataFormatada = new Date(dataRaw + "T00:00:00").toLocaleDateString('pt-BR');
-            await _supabase.from('eventos').insert([{ tipo, data: dataFormatada, tema }]);
-            document.getElementById("temaEvento").value = "";
-            carregarDados();
+
+function editarFuncionario(id){
+
+    const funcionario =
+        funcionarios.find(
+            f => f.id == id
+        );
+
+
+    if(!funcionario) return;
+
+
+    funcionarioEditando =
+        funcionario.id;
+
+
+    document
+        .getElementById("funcId")
+        .value =
+        funcionario.id;
+
+
+    document
+        .getElementById("funcNome")
+        .value =
+        funcionario.nome || "";
+
+
+    document
+        .getElementById("funcTel")
+        .value =
+        funcionario.tel || "";
+
+
+    document
+        .getElementById("funcEmail")
+        .value =
+        funcionario.email || "";
+
+
+    document
+        .getElementById("cancelarEdicao")
+        .classList.remove("hidden");
+
+
+    window.scrollTo({
+
+        top:
+        document
+        .getElementById("funcNome")
+        .getBoundingClientRect()
+        .top +
+        window.scrollY -
+        120,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+function cancelarEdicaoFuncionario(){
+
+    funcionarioEditando=null;
+
+    document
+        .getElementById("funcNome")
+        .value="";
+
+    document
+        .getElementById("funcTel")
+        .value="";
+
+    document
+        .getElementById("funcEmail")
+        .value="";
+
+    document
+        .getElementById("funcId")
+        .value="";
+
+    document
+        .getElementById("cancelarEdicao")
+        .classList.add("hidden");
+
+}
+
+
+async function excluirFuncionario(id){
+
+    const confirmar =
+        confirm(
+            "Deseja realmente excluir este funcionário?"
+        );
+
+
+    if(!confirmar) return;
+
+
+    const {
+        error
+    } =
+        await _supabase
+        .from("funcionarios")
+        .delete()
+        .eq("id",id);
+
+
+    if(error){
+
+        alert(
+            "Erro ao excluir:\n" +
+            error.message
+        );
+
+        return;
+    }
+
+
+    await carregarFuncionarios();
+
+}
+
+
+/* =====================================================
+CARREGAR FUNCIONÁRIOS
+===================================================== */
+
+async function carregarFuncionarios(){
+
+    const {
+        data,
+        error
+    } =
+        await _supabase
+        .from("funcionarios")
+        .select("*")
+        .order(
+            "id",
+            {ascending:false}
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        mostrarAlerta(
+            "funcAlert",
+            "Erro ao carregar funcionários: " +
+            error.message,
+            false
+        );
+
+        return;
+    }
+
+
+    funcionarios =
+        data || [];
+
+
+    preencherFuncionarios();
+
+
+    renderFuncionarios();
+
+
+    document
+        .getElementById("totalFuncionarios")
+        .textContent =
+        funcionarios.length;
+
+}
+
+
+function preencherFuncionarios(){
+
+    const selects = [
+
+        document
+        .getElementById("epiFuncionario"),
+
+        document
+        .getElementById("aceiteFuncionario")
+
+    ];
+
+
+    selects.forEach(select => {
+
+        const valorAtual =
+            select.value;
+
+
+        select.innerHTML =
+            '<option value="">Selecione o funcionário</option>';
+
+
+        funcionarios.forEach(f => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                f.nome;
+
+            option.textContent =
+                f.nome;
+
+            select.appendChild(option);
+
+        });
+
+
+        select.value =
+            valorAtual;
+
+    });
+
+}
+
+
+/* =====================================================
+RENDER FUNCIONÁRIOS
+===================================================== */
+
+function renderFuncionarios(lista=funcionarios){
+
+    const tabela =
+        document.getElementById(
+            "tabelaFuncionarios"
+        );
+
+
+    tabela.innerHTML="";
+
+
+    lista.forEach(f => {
+
+        const tr =
+            document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+            <td>${f.id}</td>
+
+            <td>
+                <strong>
+                ${escaparHTML(f.nome)}
+                </strong>
+            </td>
+
+            <td>
+                ${escaparHTML(f.tel || "")}
+            </td>
+
+            <td>
+                ${escaparHTML(f.email || "")}
+            </td>
+
+            <td>
+
+                <button
+                    class="btn-primary"
+                    onclick="editarFuncionario(${f.id})"
+                >
+                    Editar
+                </button>
+
+                <button
+                    class="btn-danger"
+                    onclick="excluirFuncionario(${f.id})"
+                >
+                    Excluir
+                </button>
+
+            </td>
+
+        `;
+
+
+        tabela.appendChild(tr);
+
+    });
+
+}
+
+
+function filtrarFuncionarios(){
+
+    const termo =
+        document
+        .getElementById("buscarFuncionario")
+        .value
+        .toLowerCase();
+
+
+    const filtrados =
+        funcionarios.filter(f =>
+
+            (f.nome || "")
+            .toLowerCase()
+            .includes(termo)
+
+        );
+
+
+    renderFuncionarios(filtrados);
+
+}
+
+
+/* =====================================================
+ASSINATURA
+===================================================== */
+
+function prepararCanvas(){
+
+    const canvas =
+        document.getElementById(
+            "signatureCanvas"
+        );
+
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+
+    const ratio =
+        window.devicePixelRatio || 1;
+
+
+    canvas.width =
+        rect.width * ratio;
+
+
+    canvas.height =
+        rect.height * ratio;
+
+
+    ctx =
+        canvas.getContext("2d");
+
+
+    ctx.scale(
+        ratio,
+        ratio
+    );
+
+
+    ctx.lineWidth=2;
+
+    ctx.lineCap="round";
+
+    ctx.lineJoin="round";
+
+
+    function posicao(e){
+
+        const r =
+            canvas.getBoundingClientRect();
+
+        if(e.touches){
+
+            return {
+
+                x:
+                e.touches[0].clientX-r.left,
+
+                y:
+                e.touches[0].clientY-r.top
+
+            };
+
         }
 
-        async function cadastrarFuncionario() {
-            const nome = document.getElementById("nomeFuncionario").value.trim();
-            if(!nome) return alert("Digite o nome!");
-            await _supabase.from('funcionarios').insert([{ nome }]);
-            document.getElementById("nomeFuncionario").value = "";
-            carregarDados();
+
+        return {
+
+            x:e.clientX-r.left,
+
+            y:e.clientY-r.top
+
+        };
+
+    }
+
+
+    function iniciar(e){
+
+        e.preventDefault();
+
+        desenhando=true;
+
+        const p =
+            posicao(e);
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            p.x,
+            p.y
+        );
+
+    }
+
+
+    function desenhar(e){
+
+        if(!desenhando)
+            return;
+
+        e.preventDefault();
+
+        const p =
+            posicao(e);
+
+        ctx.lineTo(
+            p.x,
+            p.y
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    function parar(){
+
+        desenhando=false;
+
+    }
+
+
+    canvas.addEventListener(
+        "mousedown",
+        iniciar
+    );
+
+    canvas.addEventListener(
+        "mousemove",
+        desenhar
+    );
+
+    canvas.addEventListener(
+        "mouseup",
+        parar
+    );
+
+    canvas.addEventListener(
+        "mouseleave",
+        parar
+    );
+
+
+    canvas.addEventListener(
+        "touchstart",
+        iniciar,
+        {passive:false}
+    );
+
+    canvas.addEventListener(
+        "touchmove",
+        desenhar,
+        {passive:false}
+    );
+
+    canvas.addEventListener(
+        "touchend",
+        parar
+    );
+
+}
+
+
+function limparAssinatura(){
+
+    const canvas =
+        document.getElementById(
+            "signatureCanvas"
+        );
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+}
+
+
+function assinaturaExiste(){
+
+    const canvas =
+        document.getElementById(
+            "signatureCanvas"
+        );
+
+
+    const pixels =
+        ctx.getImageData(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        ).data;
+
+
+    for(let i=3;i<pixels.length;i+=4){
+
+        if(pixels[i] !== 0){
+
+            return true;
+
         }
 
-        async function registrarEPI() {
-            const func = document.getElementById("selectFuncionario").value;
-            const epi = document.getElementById("nomeEPI").value.trim();
-            const status = document.getElementById("statusEPI").value;
-            const data = new Date().toLocaleDateString('pt-BR');
-            if (!func || !epi) return alert("Selecione o funcionário e digite o EPI.");
-            
-            await _supabase.from('registros_epi').insert([{ data, func, epi, status }]);
-            document.getElementById("nomeEPI").value = "";
-            carregarDados();
+    }
+
+
+    return false;
+
+}
+
+
+/* =====================================================
+EPI
+===================================================== */
+
+async function salvarEPI(){
+
+    const func =
+        document
+        .getElementById("epiFuncionario")
+        .value;
+
+
+    const epi =
+        document
+        .getElementById("epiNome")
+        .value.trim();
+
+
+    const ca =
+        document
+        .getElementById("epiCA")
+        .value.trim();
+
+
+    const data =
+        document
+        .getElementById("epiData")
+        .value ||
+        hoje();
+
+
+    const qualidade =
+        document
+        .getElementById("epiQualidade")
+        .value;
+
+
+    if(!func || !epi){
+
+        mostrarAlerta(
+            "epiAlert",
+            "Informe o funcionário e o EPI.",
+            false
+        );
+
+        return;
+    }
+
+
+    let assinatura="";
+
+
+    if(assinaturaExiste()){
+
+        assinatura =
+            document
+            .getElementById(
+                "signatureCanvas"
+            )
+            .toDataURL(
+                "image/png"
+            );
+
+    }
+
+
+    const {
+        data:resultado,
+        error
+    } =
+        await _supabase
+        .from("almoxarifado")
+        .insert([{
+
+            data:data,
+
+            func:func,
+
+            epi:epi,
+
+            ca:ca,
+
+            qualidade:qualidade,
+
+            assinatura:assinatura
+
+        }])
+        .select();
+
+
+    if(error){
+
+        console.error(error);
+
+        mostrarAlerta(
+            "epiAlert",
+            "Erro ao registrar EPI: " +
+            error.message,
+            false
+        );
+
+        return;
+    }
+
+
+    mostrarAlerta(
+        "epiAlert",
+        "Entrega de EPI registrada com sucesso!"
+    );
+
+
+    document
+        .getElementById("epiNome")
+        .value="";
+
+    document
+        .getElementById("epiCA")
+        .value="";
+
+
+    limparAssinatura();
+
+
+    await carregarEPI();
+
+}
+
+
+/* =====================================================
+ACEITE / RECUSA
+===================================================== */
+
+async function salvarAceite(){
+
+    const func =
+        document
+        .getElementById(
+            "aceiteFuncionario"
+        )
+        .value;
+
+
+    const epi =
+        document
+        .getElementById(
+            "aceiteEPI"
+        )
+        .value.trim();
+
+
+    const status =
+        document
+        .getElementById(
+            "aceiteStatus"
+        )
+        .value;
+
+
+    const data =
+        document
+        .getElementById(
+            "aceiteData"
+        )
+        .value ||
+        hoje();
+
+
+    if(!func || !epi){
+
+        mostrarAlerta(
+            "aceiteAlert",
+            "Informe o funcionário e o EPI.",
+            false
+        );
+
+        return;
+    }
+
+
+    const {
+        data:resultado,
+        error
+    } =
+        await _supabase
+        .from("aceites")
+        .insert([{
+
+            data:data,
+
+            func:func,
+
+            epi:epi,
+
+            status:status
+
+        }])
+        .select();
+
+
+    if(error){
+
+        console.error(error);
+
+        mostrarAlerta(
+            "aceiteAlert",
+            "Erro: " +
+            error.message,
+            false
+        );
+
+        return;
+    }
+
+
+    mostrarAlerta(
+        "aceiteAlert",
+        "Registro realizado com sucesso!"
+    );
+
+
+    document
+        .getElementById("aceiteEPI")
+        .value="";
+
+
+    await carregarAceites();
+
+}
+
+
+/* =====================================================
+EVENTOS
+===================================================== */
+
+async function salvarEvento(){
+
+    const tipo =
+        document
+        .getElementById("eventoTipo")
+        .value;
+
+
+    const data =
+        document
+        .getElementById("eventoData")
+        .value ||
+        hoje();
+
+
+    const tema =
+        document
+        .getElementById("eventoTema")
+        .value.trim();
+
+
+    if(!tema){
+
+        mostrarAlerta(
+            "eventoAlert",
+            "Informe o tema do evento.",
+            false
+        );
+
+        return;
+    }
+
+
+    const {
+        data:resultado,
+        error
+    } =
+        await _supabase
+        .from("eventos")
+        .insert([{
+
+            tipo:tipo,
+
+            data:data,
+
+            tema:tema
+
+        }])
+        .select();
+
+
+    if(error){
+
+        console.error(error);
+
+        mostrarAlerta(
+            "eventoAlert",
+            "Erro: " +
+            error.message,
+            false
+        );
+
+        return;
+    }
+
+
+    mostrarAlerta(
+        "eventoAlert",
+        "Evento cadastrado com sucesso!"
+    );
+
+
+    document
+        .getElementById("eventoTema")
+        .value="";
+
+
+    await carregarEventos();
+
+}
+
+
+/* =====================================================
+CARREGAR EPI
+===================================================== */
+
+async function carregarEPI(){
+
+    const {
+        data,
+        error
+    } =
+        await _supabase
+        .from("almoxarifado")
+        .select("*")
+        .order(
+            "id",
+            {ascending:false}
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+    }
+
+
+    const tabela =
+        document
+        .getElementById(
+            "tabelaEPI"
+        );
+
+
+    tabela.innerHTML="";
+
+
+    (data || []).forEach(item => {
+
+        const tr =
+            document.createElement("tr");
+
+
+        let assinatura =
+            item.assinatura;
+
+
+        if(assinatura){
+
+            assinatura =
+                `<img
+                    src="${assinatura}"
+                    style="
+                    width:100px;
+                    height:40px;
+                    object-fit:contain;
+                    border:1px solid #ddd;
+                    "
+                >`;
+
+        }
+        else{
+
+            assinatura =
+                "Não assinou";
+
         }
 
-        async function registrarAlmoxarifado() {
-            const func = document.getElementById("almoxFuncionario").value;
-            const epi = document.getElementById("almoxEPI").value.trim();
-            const ca = document.getElementById("almoxCA").value.trim();
-            const data = new Date().toLocaleDateString('pt-BR');
-            const assinatura = canvas.toDataURL(); 
-            
-            if(!func || !epi || !ca) return alert("Preencha todos os campos do EPI!");
-            
-            const blank = document.createElement('canvas');
-            blank.width = canvas.width; blank.height = canvas.height;
-            if(assinatura === blank.toDataURL()) return alert("O funcionário precisa assinar no quadro!");
-            
-            await _supabase.from('registros_almox').insert([{ data, func, epi, ca, assinatura }]);
-            limparCanvas();
-            document.getElementById("almoxEPI").value = "";
-            document.getElementById("almoxCA").value = "";
-            carregarDados();
-        }
 
-        async function deletar(tabela, id) {
-            if(confirm("Tem certeza que deseja apagar este registro?")) {
-                await _supabase.from(tabela).delete().eq('id', id);
-                carregarDados();
+        tr.innerHTML = `
+
+            <td>
+                ${escaparHTML(item.data)}
+            </td>
+
+            <td>
+                ${escaparHTML(item.func)}
+            </td>
+
+            <td>
+                ${escaparHTML(item.epi)}
+            </td>
+
+            <td>
+                ${escaparHTML(item.ca)}
+            </td>
+
+            <td>
+                ${escaparHTML(item.qualidade)}
+            </td>
+
+            <td>
+                ${assinatura}
+            </td>
+
+        `;
+
+
+        tabela.appendChild(tr);
+
+    });
+
+
+    document
+        .getElementById("totalEpis")
+        .textContent =
+        (data || []).length;
+
+}
+
+
+/* =====================================================
+CARREGAR ACEITES
+===================================================== */
+
+async function carregarAceites(){
+
+    const {
+        data,
+        error
+    } =
+        await _supabase
+        .from("aceites")
+        .select("*")
+        .order(
+            "id",
+            {ascending:false}
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+    }
+
+
+    const tabela =
+        document
+        .getElementById(
+            "tabelaAceites"
+        );
+
+
+    tabela.innerHTML="";
+
+
+    (data || []).forEach(item => {
+
+        const tr =
+            document.createElement("tr");
+
+
+        const classe =
+            item.status === "ACEITO"
+            ? "badge badge-ok"
+            : "badge badge-no";
+
+
+        tr.innerHTML = `
+
+            <td>
+                ${escaparHTML(item.data)}
+            </td>
+
+            <td>
+                ${escaparHTML(item.func)}
+            </td>
+
+            <td>
+                ${escaparHTML(item.epi)}
+            </td>
+
+            <td>
+                <span class="${classe}">
+                    ${escaparHTML(item.status)}
+                </span>
+            </td>
+
+        `;
+
+
+        tabela.appendChild(tr);
+
+    });
+
+
+    document
+        .getElementById("totalAceites")
+        .textContent =
+        (data || []).length;
+
+}
+
+
+/* =====================================================
+CARREGAR EVENTOS
+===================================================== */
+
+async function carregarEventos(){
+
+    const {
+        data,
+        error
+    } =
+        await _supabase
+        .from("eventos")
+        .select("*")
+        .order(
+            "id",
+            {ascending:false}
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+    }
+
+
+    const tabela =
+        document
+        .getElementById(
+            "tabelaEventos"
+        );
+
+
+    tabela.innerHTML="";
+
+
+    (data || []).forEach(item => {
+
+        const tr =
+            document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+            <td>
+                ${escaparHTML(item.tipo)}
+            </td>
+
+            <td>
+                ${escaparHTML(item.data)}
+            </td>
+
+            <td>
+                ${escaparHTML(item.tema)}
+            </td>
+
+        `;
+
+
+        tabela.appendChild(tr);
+
+    });
+
+
+    document
+        .getElementById("totalEventos")
+        .textContent =
+        (data || []).length;
+
+}
+
+
+/* =====================================================
+FOTO OFICIAL
+===================================================== */
+
+async function carregarFoto(){
+
+    const {
+        data
+    } =
+        _supabase
+        .storage
+        .from("perfil")
+        .getPublicUrl(
+            "elisangela.jpg"
+        );
+
+
+    if(
+        data &&
+        data.publicUrl
+    ){
+
+        document
+        .getElementById(
+            "fotoPerfil"
+        )
+        .src =
+        data.publicUrl +
+        "?t=" +
+        Date.now();
+
+    }
+
+}
+
+
+async function enviarFoto(){
+
+    const input =
+        document
+        .getElementById(
+            "fotoInput"
+        );
+
+
+    const arquivo =
+        input.files[0];
+
+
+    if(!arquivo)
+        return;
+
+
+    if(!arquivo.type.startsWith("image/")){
+
+        alert(
+            "Selecione uma imagem."
+        );
+
+        return;
+    }
+
+
+    if(arquivo.size > 5 * 1024 * 1024){
+
+        alert(
+            "A foto deve ter no máximo 5 MB."
+        );
+
+        return;
+    }
+
+
+    const extensao =
+        arquivo.name
+        .split(".")
+        .pop()
+        .toLowerCase();
+
+
+    const nomeArquivo =
+        "elisangela.jpg";
+
+
+    /*
+    Remove foto anterior,
+    caso exista
+    */
+
+    await _supabase
+        .storage
+        .from("perfil")
+        .remove([
+            nomeArquivo
+        ]);
+
+
+    /*
+    Envia nova foto
+    */
+
+    const {
+        data,
+        error
+    } =
+        await _supabase
+        .storage
+        .from("perfil")
+        .upload(
+            nomeArquivo,
+            arquivo,
+            {
+                upsert:true,
+                contentType:
+                    arquivo.type
             }
-        }
+        );
 
-        // CANVAS (Assinatura Digital)
-        const canvas = document.getElementById("assinaturaCanvas");
-        const ctx = canvas.getContext("2d");
-        let desenhando = false;
 
-        function ajustarCanvas() {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            ctx.lineWidth = 2; 
-            ctx.strokeStyle = "#000080"; 
-            ctx.lineCap = "round";
-        }
+    if(error){
 
-        window.addEventListener("resize", ajustarCanvas);
+        console.error(error);
 
-        function iniciarDesenho(e) { desenhando = true; desenhar(e); }
-        function pararDesenho() { desenhando = false; ctx.beginPath(); }
-        
-        function desenhar(e) {
-            if (!desenhando) return;
-            e.preventDefault(); 
-            const rect = canvas.getBoundingClientRect();
-            let clientX, clientY;
-            if (e.touches && e.touches.length > 0) {
-                clientX = e.touches[0].clientX; clientY = e.touches[0].clientY;
-            } else {
-                clientX = e.clientX; clientY = e.clientY;
-            }
-            ctx.lineTo(clientX - rect.left, clientY - rect.top);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(clientX - rect.left, clientY - rect.top);
-        }
+        alert(
+            "Erro ao enviar foto:\n\n" +
+            error.message
+        );
 
-        canvas.addEventListener("mousedown", iniciarDesenho);
-        canvas.addEventListener("mouseup", pararDesenho);
-        canvas.addEventListener("mousemove", desenhar);
-        canvas.addEventListener("mouseout", pararDesenho);
-        canvas.addEventListener("touchstart", iniciarDesenho, {passive: false});
-        canvas.addEventListener("touchend", pararDesenho);
-        canvas.addEventListener("touchmove", desenhar, {passive: false});
-        canvas.addEventListener("touchcancel", pararDesenho);
+        return;
+    }
 
-        function limparCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
-    </script>
+
+    carregarFoto();
+
+
+    alert(
+        "Foto oficial atualizada com sucesso!"
+    );
+
+}
+
+
+document
+    .getElementById(
+        "fotoInput"
+    )
+    .addEventListener(
+        "change",
+        enviarFoto
+    );
+
+
+/* =====================================================
+CARREGAR TUDO
+===================================================== */
+
+async function carregarTudo(){
+
+    await carregarFuncionarios();
+
+    await carregarEPI();
+
+    await carregarAceites();
+
+    await carregarEventos();
+
+    await carregarFoto();
+
+}
+
+
+/* =====================================================
+INICIALIZAÇÃO
+===================================================== */
+
+document
+    .getElementById("epiData")
+    .value =
+    hoje();
+
+
+document
+    .getElementById("aceiteData")
+    .value =
+    hoje();
+
+
+document
+    .getElementById("eventoData")
+    .value =
+    hoje();
+
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        /*
+        Não reinicializamos
+        automaticamente para
+        não apagar assinatura.
+        */
+
+    }
+);
+
+
+window.addEventListener(
+    "load",
+    () => {
+
+        prepararCanvas();
+
+        verificarLogin();
+
+        carregarFoto();
+
+    }
+);
+
+</script>
+
 </body>
+
 </html>
