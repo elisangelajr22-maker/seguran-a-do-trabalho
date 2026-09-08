@@ -180,14 +180,61 @@
                 <div class="grid-almox">
                     <input type="text" id="nomeFuncionario" class="input-group col-span-2" placeholder="Nome Completo">
                 </div>
-                <button onclick="cadastrarFuncionario()" class="botao" style="width: 100%; margin-top:0;">Salvar Funcionário</button>
-                <div style="overflow-x: auto;">
-                    <table style="margin-top: 20px;">
-                        <thead><tr><th>Nome</th><th>Ação</th></tr></thead>
-                        <tbody id="tabelaFuncionarios"></tbody>
-                    </table>
-                </div>
-            </div>
+                <button onclick=async function cadastrarFuncionario() {
+    const nomeInput = document.getElementById("funcNome");
+
+    if (!nomeInput) {
+        alert("Campo de funcionário não encontrado.");
+        return;
+    }
+
+    const nome = nomeInput.value.trim();
+
+    if (!nome) {
+        alert("Digite o nome do funcionário.");
+        nomeInput.focus();
+        return;
+    }
+
+    try {
+        const { data, error } = await _supabase
+            .from("funcionarios")
+            .insert([
+                {
+                    nome: nome
+                }
+            ])
+            .select();
+
+        if (error) {
+            console.error("Erro ao cadastrar funcionário:", error);
+
+            alert(
+                "ERRO AO SALVAR FUNCIONÁRIO\n\n" +
+                "Código: " + (error.code || "N/A") + "\n" +
+                "Mensagem: " + error.message
+            );
+
+            return;
+        }
+
+        console.log("Funcionário cadastrado:", data);
+
+        alert("Funcionário cadastrado com sucesso!");
+
+        nomeInput.value = "";
+
+        await carregarDados();
+
+    } catch (erro) {
+        console.error("Erro inesperado:", erro);
+
+        alert(
+            "Ocorreu um erro inesperado ao cadastrar o funcionário.\n\n" +
+            erro.message
+        );
+    }
+}
             
             <!-- Almoxarifado -->
             <div class="painel-card col-span-2" style="background: #eef5fa; border-left: 5px solid #198754;">
