@@ -16,8 +16,6 @@
         
         .hero { min-height: 650px; background: linear-gradient(135deg, #071522, #12395a); color: white; display: flex; align-items: center; justify-content: center; padding: 60px 25px; }
         .hero-content { max-width: 1100px; width: 100%; display: flex; align-items: center; gap: 60px; }
-        .foto-area { text-align: center; }
-        .foto { width: 350px; height: 440px; object-fit: cover; border-radius: 20px; border: 5px solid white; box-shadow: 0 10px 35px rgba(0,0,0,0.4); background: #ddd; }
         .texto h1 { font-size: 55px; margin-bottom: 8px; }
         .texto h2 { color: #4da3ff; font-size: 28px; margin-bottom: 25px; }
         .texto p { font-size: 19px; line-height: 1.7; color: #e5edf5; margin-bottom: 12px; }
@@ -40,7 +38,9 @@
         th, td { padding: 12px; border: 1px solid #ddd; text-align: left; font-size: 14px; }
         th { background: #071522; color: white; }
         
-        canvas { border: 2px dashed #ccc; background: #fff; border-radius: 8px; width: 100%; height: 120px; cursor: crosshair; }
+        /* Ajustes do Canvas */
+        .canvas-container { border: 2px dashed #ccc; background: #fff; border-radius: 8px; width: 100%; height: 150px; overflow: hidden; position: relative; margin-bottom: 10px; }
+        canvas { width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
         .img-assinatura { max-height: 50px; border-bottom: 1px solid #000; padding-bottom: 5px; }
     </style>
 </head>
@@ -93,12 +93,18 @@
                 <select id="almoxFuncionario" class="input-group"><option value="">Carregando...</option></select>
                 <input type="text" id="almoxEPI" class="input-group" placeholder="EPI Retirado">
                 <input type="text" id="almoxCA" class="input-group" placeholder="Nº do CA">
-                <p>✍️ Assinatura:</p>
-                <canvas id="assinaturaCanvas"></canvas>
+                
+                <p style="margin-bottom: 8px; font-weight: bold;">✍️ Assinatura:</p>
+                <div class="canvas-container">
+                    <canvas id="assinaturaCanvas"></canvas>
+                </div>
+                <button onclick="limparCanvas()" style="background: #999; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Limpar Quadro</button>
+
                 <button onclick="registrarAlmoxarifado()" class="botao" style="margin-top:15px;">Registrar Saída</button>
-                <div style="overflow-x: auto; margin-top: 15px;">
+                
+                <div style="overflow-x: auto; margin-top: 25px;">
                     <table>
-                        <thead><tr><th>Data</th><th>Funcionário</th><th>EPI</th><th>CA</th><th>Assinatura</th></tr></thead>
+                        <thead><tr><th>Data</th><th>Funcionário</th><th>EPI</th><th>CA</th><th>Assinatura</th><th>Ação</th></tr></thead>
                         <tbody id="tabelaAlmox"></tbody>
                     </table>
                 </div>
@@ -110,7 +116,7 @@
     <script>
         // CONFIGURAÇÃO DO SUPABASE
         const supabaseUrl = 'https://tqvavpchzdcsgwudileu.supabase.co';
-        const supabaseKey = 'sb_publishable_ik7CAx549Dy2fj_d8xMrAA_YX8vo3vm'; // Troque se der erro
+        const supabaseKey = 'sb_publishable_ik7CAx549Dy2fj_d8xMrAA_YX8vo3vm'; 
         const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         // LOGIN
@@ -119,18 +125,19 @@
                 document.getElementById("admin").style.display = "none";
                 document.getElementById("painel").style.display = "block";
                 carregarDados();
+                ajustarCanvas(); // Ajusta o quadro assim que o painel abre
             } else alert("Senha incorreta");
         }
 
-        // FUNÇÕES DE BANCO DE DADOS (NUVEM)
+        // FUNÇÕES DE BANCO DE DADOS
         async function carregarDados() {
             // Busca Funcionários
             let { data: funcs } = await _supabase.from('funcionarios').select('*');
-            let opts = '<option value="">Selecione...</option>';
+            let opts = '<option value="">Selecione o funcionário...</option>';
             let tabFuncs = '';
             (funcs || []).forEach(f => {
                 opts += `<option value="${f.nome}">${f.nome}</option>`;
-                tabFuncs += `<tr><td>${f.nome}</td><td><button onclick="deletar('funcionarios', ${f.id})" style="color:red; border:none; background:none; cursor:pointer;">X</button></td></tr>`;
+                tabFuncs += `<tr><td>${f.nome}</td><td><button onclick="deletar('funcionarios', ${f.id})" style="color:red; border:none; background:none; cursor:pointer; font-weight:bold;">X</button></td></tr>`;
             });
             document.getElementById("almoxFuncionario").innerHTML = opts;
             document.getElementById("tabelaFuncionarios").innerHTML = tabFuncs;
@@ -139,7 +146,8 @@
             let { data: almox } = await _supabase.from('registros_almox').select('*');
             document.getElementById("tabelaAlmox").innerHTML = (almox || []).map(a => 
                 `<tr><td>${a.data}</td><td>${a.func}</td><td>${a.epi}</td><td>${a.ca}</td>
-                <td><img src="${a.assinatura}" class="img-assinatura"></td></tr>`
+                <td><img src="${a.assinatura}" class="img-assinatura"></td>
+                <td><button onclick="deletar('registros_almox', ${a.id})" style="color:red; border:none; background:none; cursor:pointer; font-weight:bold;">X</button></td></tr>`
             ).join('');
         }
 
@@ -156,9 +164,14 @@
             const epi = document.getElementById("almoxEPI").value.trim();
             const ca = document.getElementById("almoxCA").value.trim();
             const data = new Date().toLocaleDateString('pt-BR');
-            const assinatura = canvas.toDataURL(); // Pega o desenho do canvas
+            const assinatura = canvas.toDataURL(); 
             
-            if(!func || !epi || !ca) return alert("Preencha tudo!");
+            if(!func || !epi || !ca) return alert("Preencha todos os campos do EPI!");
+            
+            // Verifica se o canvas está em branco
+            const blank = document.createElement('canvas');
+            blank.width = canvas.width; blank.height = canvas.height;
+            if(assinatura === blank.toDataURL()) return alert("O funcionário precisa assinar no quadro!");
             
             await _supabase.from('registros_almox').insert([{ data, func, epi, ca, assinatura }]);
             limparCanvas();
@@ -168,30 +181,72 @@
         }
 
         async function deletar(tabela, id) {
-            await _supabase.from(tabela).delete().eq('id', id);
-            carregarDados();
+            if(confirm("Tem certeza que deseja apagar este registro?")) {
+                await _supabase.from(tabela).delete().eq('id', id);
+                carregarDados();
+            }
         }
 
-        // CANVAS (Lógica do desenho)
+        // CANVAS (Assinatura Digital Corrigida)
         const canvas = document.getElementById("assinaturaCanvas");
         const ctx = canvas.getContext("2d");
         let desenhando = false;
-        canvas.width = 400; canvas.height = 120;
-        ctx.lineWidth = 2; ctx.strokeStyle = "#000";
 
-        canvas.addEventListener("mousedown", e => { desenhando = true; desenhar(e); });
-        canvas.addEventListener("mouseup", () => { desenhando = false; ctx.beginPath(); });
-        canvas.addEventListener("mousemove", desenhar);
+        function ajustarCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            ctx.lineWidth = 2; 
+            ctx.strokeStyle = "#000080"; // Azul escuro
+            ctx.lineCap = "round";
+        }
 
+        // Se a tela mudar de tamanho, reajusta o quadro
+        window.addEventListener("resize", ajustarCanvas);
+
+        function iniciarDesenho(e) { 
+            desenhando = true; 
+            desenhar(e); 
+        }
+        
+        function pararDesenho() { 
+            desenhando = false; 
+            ctx.beginPath(); 
+        }
+        
         function desenhar(e) {
             if (!desenhando) return;
+            e.preventDefault(); // Impede a tela de rolar no celular
+            
             const rect = canvas.getBoundingClientRect();
-            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            let clientX, clientY;
+            
+            if (e.touches && e.touches.length > 0) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            
+            ctx.lineTo(clientX - rect.left, clientY - rect.top);
             ctx.stroke();
             ctx.beginPath();
-            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.moveTo(clientX - rect.left, clientY - rect.top);
         }
-        function limparCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+        canvas.addEventListener("mousedown", iniciarDesenho);
+        canvas.addEventListener("mouseup", pararDesenho);
+        canvas.addEventListener("mousemove", desenhar);
+        canvas.addEventListener("mouseout", pararDesenho);
+
+        canvas.addEventListener("touchstart", iniciarDesenho, {passive: false});
+        canvas.addEventListener("touchend", pararDesenho);
+        canvas.addEventListener("touchmove", desenhar, {passive: false});
+        canvas.addEventListener("touchcancel", pararDesenho);
+
+        function limparCanvas() { 
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        }
     </script>
 </body>
 </html>
