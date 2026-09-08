@@ -86,7 +86,6 @@
     <section class="hero" id="inicio">
         <div class="hero-content">
             
-            <!-- FOTO DE VOLTA AQUI -->
             <div class="foto-area">
                 <img id="fotoPerfil" class="foto" alt="Foto de Elisângela">
                 <label class="selecionar" for="fotoInput">📷 Selecionar minha foto</label>
@@ -128,10 +127,11 @@
     <section class="contato" id="contato">
         <h2>📞 Como posso ajudar sua empresa?</h2>
         <div class="contato-botoes">
-            <a class="botao" href="https://wa.me/5500000000000" target="_blank" style="background: #25D366;">💬 WhatsApp</a>
-            <a class="botao" href="mailto:elisangela@email.com" style="background: #ea4335;">✉️ E-mail</a>
-            <a class="botao" href="#" target="_blank" style="background: #0a66c2;">🔗 LinkedIn</a>
-            <a class="botao" href="#" target="_blank" style="background: #E1306C;">📷 Instagram</a>
+            <!-- LINKS ATUALIZADOS AQUI -->
+            <a class="botao" href="https://wa.me/5511962876367" target="_blank" style="background: #25D366;">💬 WhatsApp</a>
+            <a class="botao" href="mailto:elisangela.jr22@gmail.com" style="background: #ea4335;">✉️ E-mail</a>
+            <a class="botao" href="https://www.linkedin.com/in/elisangela-rodrigues" target="_blank" style="background: #0a66c2;">🔗 LinkedIn</a>
+            <a class="botao" href="https://instagram.com/elisangela.jr" target="_blank" style="background: #E1306C;">📷 Instagram</a>
         </div>
     </section>
 
@@ -139,8 +139,10 @@
     <section id="admin" class="secao">
         <div class="titulo"><h2>🔐 Área Administrativa</h2></div>
         <div class="admin-box">
-            <label>E-mail</label><input id="adminEmail" type="email" class="input-group" placeholder="admin@email.com">
-            <label>Senha</label><input id="adminSenha" type="password" class="input-group" placeholder="1234">
+            <label>E-mail</label>
+            <input id="adminEmail" type="email" class="input-group" placeholder="Seu e-mail de acesso">
+            <label>Senha</label>
+            <input id="adminSenha" type="password" class="input-group" placeholder="Sua senha">
             <button onclick="entrarAdmin()" class="botao" style="background: #071522; width: 100%;">Entrar no Sistema</button>
         </div>
     </section>
@@ -261,14 +263,19 @@
         const supabaseKey = 'sb_publishable_ik7CAx549Dy2fj_d8xMrAA_YX8vo3vm'; 
         const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // LOGIN
+        // LOGIN ATUALIZADO (Exige E-mail e Senha)
         function entrarAdmin() {
-            if (document.getElementById("adminSenha").value === "1234") {
+            const email = document.getElementById("adminEmail").value.trim();
+            const senha = document.getElementById("adminSenha").value;
+
+            if (email === "elisangelajr22@gmail.com" && senha === "e20t11g81@") {
                 document.getElementById("admin").style.display = "none";
                 document.getElementById("painel").style.display = "block";
                 carregarDados();
                 setTimeout(ajustarCanvas, 300);
-            } else alert("Senha incorreta");
+            } else {
+                alert("E-mail ou senha incorretos! Tente novamente.");
+            }
         }
 
         // FUNÇÕES DO BANCO DE DADOS
