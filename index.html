@@ -1,3091 +1,3058 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+  <title>Elisângela | Segurança do Trabalho</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<title>Elisângela | Segurança do Trabalho</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
-
-body{
-    background:#f4f7fb;
-    color:#172033;
-}
-
-header{
-    background:#071b33;
-    color:white;
-    padding:18px 6%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:sticky;
-    top:0;
-    z-index:1000;
-    box-shadow:0 3px 15px rgba(0,0,0,.2);
-}
-
-.logo{
-    font-size:21px;
-    font-weight:bold;
-}
-
-.logo span{
-    color:#39a9ff;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    margin-left:20px;
-    font-size:14px;
-}
-
-nav a:hover{
-    color:#39a9ff;
-}
-
-.container{
-    width:90%;
-    max-width:1200px;
-    margin:auto;
-}
-
-.hero{
-    background:
-    linear-gradient(135deg,#071b33,#0d3763);
-    color:white;
-    padding:80px 0;
-}
-
-.hero-content{
-    display:grid;
-    grid-template-columns:1fr 330px;
-    gap:50px;
-    align-items:center;
-}
-
-.hero h1{
-    font-size:46px;
-    margin-bottom:15px;
-}
-
-.hero h1 span{
-    color:#42b4ff;
-}
-
-.hero p{
-    font-size:19px;
-    line-height:1.6;
-    color:#d8e7f5;
-}
-
-.profile-box{
-    text-align:center;
-}
-
-.profile-photo{
-    width:270px;
-    height:270px;
-    border-radius:50%;
-    object-fit:cover;
-    border:7px solid white;
-    box-shadow:0 10px 35px rgba(0,0,0,.35);
-    background:#dbe7f2;
-}
-
-.photo-button{
-    display:inline-block;
-    margin-top:15px;
-    padding:10px 18px;
-    border-radius:8px;
-    background:#178be6;
-    color:white;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.photo-button:hover{
-    background:#0871c2;
-}
-
-#fotoInput{
-    display:none;
-}
-
-section{
-    padding:65px 0;
-}
-
-.section-title{
-    text-align:center;
-    margin-bottom:40px;
-}
-
-.section-title h2{
-    font-size:32px;
-    color:#071b33;
-}
-
-.section-title p{
-    margin-top:10px;
-    color:#64748b;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:22px;
-}
-
-.card{
-    background:white;
-    border-radius:14px;
-    padding:28px;
-    box-shadow:0 5px 22px rgba(0,0,0,.07);
-    border:1px solid #e4eaf1;
-}
-
-.card h3{
-    color:#0876c9;
-    margin-bottom:12px;
-}
-
-.card p{
-    color:#64748b;
-    line-height:1.6;
-}
-
-.contact{
-    background:#071b33;
-    color:white;
-}
-
-.contact .section-title h2{
-    color:white;
-}
-
-.contact-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
-
-.contact-card{
-    background:#0d2b4e;
-    padding:22px;
-    border-radius:12px;
-    text-align:center;
-}
-
-.contact-card a{
-    color:white;
-    text-decoration:none;
-}
-
-.admin-login{
-    max-width:450px;
-    margin:30px auto;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 25px rgba(0,0,0,.08);
-}
-
-.admin-login h2{
-    margin-bottom:20px;
-}
-
-input,
-select,
-textarea{
-    width:100%;
-    padding:12px;
-    border:1px solid #d5dde7;
-    border-radius:8px;
-    margin-top:7px;
-    margin-bottom:15px;
-    outline:none;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-    border-color:#178be6;
-}
-
-button{
-    border:0;
-    padding:12px 18px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.btn-primary{
-    background:#0876c9;
-    color:white;
-}
-
-.btn-primary:hover{
-    background:#075d9d;
-}
-
-.btn-danger{
-    background:#dc3545;
-    color:white;
-}
-
-.btn-success{
-    background:#198754;
-    color:white;
-}
-
-.btn-secondary{
-    background:#64748b;
-    color:white;
-}
-
-.admin{
-    display:none;
-    padding:40px 0 80px;
-}
-
-.dashboard{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    margin-bottom:35px;
-}
-
-.stat{
-    background:white;
-    border-radius:14px;
-    padding:25px;
-    box-shadow:0 5px 20px rgba(0,0,0,.06);
-}
-
-.stat h3{
-    color:#64748b;
-    font-size:14px;
-}
-
-.stat strong{
-    display:block;
-    font-size:35px;
-    margin-top:10px;
-    color:#0876c9;
-}
-
-.admin-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:25px;
-}
-
-.admin-card{
-    background:white;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,.06);
-    overflow:hidden;
-}
-
-.admin-card h2{
-    margin-bottom:20px;
-    color:#071b33;
-}
-
-.table-container{
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:650px;
-}
-
-th,
-td{
-    padding:12px;
-    border-bottom:1px solid #e5eaf0;
-    text-align:left;
-    font-size:14px;
-}
-
-th{
-    background:#f0f5fa;
-    color:#071b33;
-}
-
-.badge{
-    display:inline-block;
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:bold;
-}
-
-.badge-ok{
-    background:#d1f3df;
-    color:#08743c;
-}
-
-.badge-no{
-    background:#ffd9dd;
-    color:#a71929;
-}
-
-.badge-pendente{
-    background:#fff1c7;
-    color:#876400;
-}
-
-.signature-box{
-    border:2px dashed #bbc7d4;
-    border-radius:8px;
-    height:180px;
-    position:relative;
-    background:#fff;
-}
-
-#signatureCanvas{
-    width:100%;
-    height:100%;
-    touch-action:none;
-}
-
-.signature-buttons{
-    margin-top:10px;
-    display:flex;
-    gap:10px;
-}
-
-.alert{
-    padding:14px;
-    border-radius:8px;
-    margin-bottom:15px;
-    display:none;
-}
-
-.alert-success{
-    background:#d1f3df;
-    color:#08743c;
-}
-
-.alert-error{
-    background:#ffd9dd;
-    color:#a71929;
-}
-
-footer{
-    background:#031120;
-    color:#b8c5d3;
-    text-align:center;
-    padding:25px;
-    font-size:14px;
-}
-
-.hidden{
-    display:none !important;
-}
-
-@media(max-width:900px){
-
-    .hero-content{
-        grid-template-columns:1fr;
-        text-align:center;
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .cards{
-        grid-template-columns:1fr 1fr;
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+      line-height: 1.5;
     }
 
-    .dashboard{
-        grid-template-columns:1fr 1fr;
+    header {
+      background: #071522;
+      color: white;
+      padding: 18px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,.2);
     }
 
-    .admin-grid{
-        grid-template-columns:1fr;
+    .logo {
+      font-size: 21px;
+      font-weight: bold;
     }
 
-    .contact-grid{
-        grid-template-columns:1fr 1fr;
+    nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
     }
 
-}
-
-@media(max-width:600px){
-
-    header{
-        flex-direction:column;
-        gap:12px;
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
     }
 
-    nav a{
-        margin:0 6px;
+    nav a:hover {
+      color: #4da3ff;
     }
 
-    .hero h1{
-        font-size:34px;
+    .hero {
+      min-height: 650px;
+      background: linear-gradient(135deg, #071522, #12395a);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 25px;
     }
 
-    .cards,
-    .dashboard,
-    .contact-grid{
-        grid-template-columns:1fr;
+    .hero-content {
+      max-width: 1150px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 60px;
     }
 
-    .profile-photo{
-        width:220px;
-        height:220px;
+    .foto-area {
+      text-align: center;
     }
 
-}
+    .foto {
+      width: 330px;
+      height: 420px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 5px solid white;
+      background: #ddd;
+      box-shadow: 0 12px 35px rgba(0,0,0,.35);
+    }
 
-</style>
+    #fotoInput {
+      display: none;
+    }
 
+    .selecionar-foto {
+      display: block;
+      width: 230px;
+      margin: 15px auto;
+      padding: 12px;
+      border-radius: 8px;
+      background: #198754;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hero h1 {
+      font-size: 58px;
+      margin-bottom: 5px;
+    }
+
+    .hero h2 {
+      color: #4da3ff;
+      font-size: 28px;
+      margin-bottom: 25px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #e5edf5;
+      max-width: 650px;
+      margin-bottom: 15px;
+    }
+
+    .botao {
+      display: inline-block;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 20px;
+      margin-top: 10px;
+      background: #198754;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .botao:hover {
+      filter: brightness(1.08);
+    }
+
+    .secao {
+      max-width: 1150px;
+      margin: auto;
+      padding: 70px 25px;
+    }
+
+    .titulo {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .titulo h2 {
+      color: #071522;
+      font-size: 34px;
+    }
+
+    .titulo p {
+      color: #666;
+      margin-top: 8px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+      text-align: center;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+    }
+
+    .card p {
+      color: #666;
+    }
+
+    .icone {
+      font-size: 45px;
+    }
+
+    .fundo-azul {
+      background: #eef5fa;
+    }
+
+    .contato {
+      background: #12395a;
+      color: white;
+      text-align: center;
+      padding: 70px 25px;
+    }
+
+    .contato h2 {
+      font-size: 32px;
+    }
+
+    .contato-botoes {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .admin-login {
+      max-width: 480px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    }
+
+    .campo {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      margin: 7px 0 15px;
+      font-size: 15px;
+    }
+
+    .painel {
+      display: none;
+    }
+
+    .painel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .painel-card {
+      background: white;
+      padding: 22px;
+      border-radius: 12px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.08);
+    }
+
+    .span-2 {
+      grid-column: span 2;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background: white;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #071522;
+      color: white;
+    }
+
+    .tabela-container {
+      overflow-x: auto;
+    }
+
+    .recusa {
+      background: #ffd9d9;
+      color: #a00000;
+      font-weight: bold;
+    }
+
+    .regular {
+      color: #198754;
+      font-weight: bold;
+    }
+
+    .alerta {
+      color: #b00020;
+      font-weight: bold;
+    }
+
+    .canvas-container {
+      height: 160px;
+      border: 2px dashed #aaa;
+      border-radius: 8px;
+      background: white;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+
+    #assinaturaCanvas {
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 20px;
+      background: #e7f1ff;
+      color: #0755a5;
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .status-assinatura {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #f1f8ff;
+    }
+
+    footer {
+      background: #071522;
+      color: #aaa;
+      text-align: center;
+      padding: 22px;
+    }
+
+    /* MODAL */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0,0,0,.7);
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal-box {
+      max-width: 950px;
+      margin: 20px auto;
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 15px;
+    }
+
+    .ficha-cabecalho {
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .ficha-status {
+      padding: 12px;
+      margin-top: 15px;
+      border-radius: 8px;
+      background: #f5f5f5;
+    }
+
+    .assinatura-profissional {
+      background: #f8fbfd;
+      border: 1px solid #d9e4ec;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 25px;
+    }
+
+    .fechar {
+      background: #777;
+    }
+
+    @media(max-width: 850px) {
+
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .hero-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .foto {
+        width: 280px;
+        height: 350px;
+      }
+
+      .painel-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .span-2 {
+        grid-column: span 1;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+
+      header,
+      .contato,
+      footer,
+      .nao-imprimir,
+      .modal-header button {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+      }
+
+      .modal {
+        position: static;
+        background: white;
+        padding: 0;
+      }
+
+      .modal-box {
+        box-shadow: none;
+        margin: 0;
+        max-width: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
 
-<div class="logo">
-Elisângela <span>| Segurança do Trabalho</span>
-</div>
+  <div class="logo">
+    🦺 Segurança do Trabalho
+  </div>
 
-<nav>
-
-<a href="#inicio">Início</a>
-<a href="#servicos">Serviços</a>
-<a href="#treinamentos">Treinamentos</a>
-<a href="#contato">Contato</a>
-<a href="#administracao">Administração</a>
-
-</nav>
+  <nav>
+    <a href="#inicio">Início</a>
+    <a href="#consultoria">Consultoria</a>
+    <a href="#treinamentos">Treinamentos</a>
+    <a href="#palestras">Palestras</a>
+    <a href="#contato">Contato</a>
+    <a href="#admin">🔐 Administração</a>
+  </nav>
 
 </header>
 
 
-<!-- =====================================================
-INÍCIO
-===================================================== -->
+<!-- =========================
+     PERFIL
+========================= -->
 
 <section class="hero" id="inicio">
 
-<div class="container hero-content">
+  <div class="hero-content">
 
-<div>
+    <div class="foto-area">
 
-<h1>
-Segurança do Trabalho
-<br>
-<span>com responsabilidade e prevenção.</span>
-</h1>
+      <img
+        id="fotoPerfil"
+        class="foto"
+        alt="Foto de Elisângela"
+      >
 
-<p>
-Olá! Eu sou <strong>Elisângela</strong>,
-Técnica de Segurança do Trabalho.
-Este espaço foi criado para acompanhar,
-organizar e fortalecer a segurança dos
-trabalhadores.
-</p>
+      <label
+        class="selecionar-foto"
+        for="fotoInput"
+      >
+        📷 Selecionar minha foto
+      </label>
 
-<br>
+      <input
+        type="file"
+        id="fotoInput"
+        accept="image/*"
+      >
 
-<a href="#contato">
-<button class="btn-primary">
-Entrar em contato
-</button>
-</a>
+    </div>
 
-</div>
+    <div>
 
+      <h1>Elisângela</h1>
 
-<div class="profile-box">
+      <h2>
+        Técnica de Segurança do Trabalho
+      </h2>
 
-<img
-id="fotoPerfil"
-class="profile-photo"
-src="https://via.placeholder.com/400x400.png?text=Elisangela"
-alt="Elisângela - Técnica de Segurança do Trabalho"
->
+      <p>
+        Prevenção, conscientização e segurança para proteger pessoas
+        e promover ambientes de trabalho mais seguros.
+      </p>
 
-<br>
+      <p>
+        Atuação em treinamentos, DDS, palestras, controle de EPI,
+        documentação e acompanhamento das condições de segurança.
+      </p>
 
-<label
-for="fotoInput"
-class="photo-button"
->
-📷 Alterar minha foto
-</label>
+      <a
+        href="#contato"
+        class="botao"
+      >
+        📞 Fale Comigo
+      </a>
 
-<input
-type="file"
-id="fotoInput"
-accept="image/*"
->
+    </div>
 
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
-<!-- =====================================================
-SERVIÇOS
-===================================================== -->
+<!-- =========================
+     CONSULTORIA
+========================= -->
 
-<section id="servicos">
+<section class="secao" id="consultoria">
 
-<div class="container">
+  <div class="titulo">
 
-<div class="section-title">
+    <h2>
+      📊 Assessoria e Consultoria
+    </h2>
 
-<h2>Serviços</h2>
+    <p>
+      Soluções para prevenção e gestão de Segurança do Trabalho.
+    </p>
 
-<p>
-Prevenção, orientação e gestão de segurança.
-</p>
+  </div>
 
-</div>
+  <div class="cards">
 
+    <div class="card">
+      <div class="icone">📄</div>
+      <h3>PGR e PCMSO</h3>
+      <p>
+        Apoio na organização e acompanhamento da documentação
+        de segurança e saúde ocupacional.
+      </p>
+    </div>
 
-<div class="cards">
+    <div class="card">
+      <div class="icone">🔍</div>
+      <h3>Auditorias</h3>
+      <p>
+        Identificação de riscos, não conformidades e oportunidades
+        de melhoria.
+      </p>
+    </div>
 
-<div class="card">
+    <div class="card">
+      <div class="icone">🏗️</div>
+      <h3>Laudos Técnicos</h3>
+      <p>
+        Apoio na organização de documentos e controles técnicos.
+      </p>
+    </div>
 
-<h3>🦺 Gestão de EPI</h3>
+    <div class="card">
+      <div class="icone">🤝</div>
+      <h3>Terceirizados</h3>
+      <p>
+        Acompanhamento da documentação e integração de empresas
+        contratadas.
+      </p>
+    </div>
 
-<p>
-Controle de entrega, registro, aceite,
-recusa e acompanhamento dos equipamentos
-de proteção individual.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>📋 Inspeções</h3>
-
-<p>
-Inspeções de segurança, identificação
-de riscos e acompanhamento das ações
-corretivas.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>📚 Treinamentos</h3>
-
-<p>
-Treinamentos e orientações para
-conscientização dos trabalhadores.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>⚠️ Gestão de Riscos</h3>
-
-<p>
-Acompanhamento dos riscos existentes
-nas atividades e ambientes de trabalho.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>📊 Documentação</h3>
-
-<p>
-Organização dos registros relacionados
-à Segurança e Saúde do Trabalho.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>👷 Acompanhamento</h3>
-
-<p>
-Acompanhamento das condições de segurança
-e orientação das equipes.
-</p>
-
-</div>
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
-<!-- =====================================================
-TREINAMENTOS
-===================================================== -->
+<!-- =========================
+     TREINAMENTOS
+========================= -->
 
-<section id="treinamentos">
+<section class="secao fundo-azul" id="treinamentos">
 
-<div class="container">
+  <div class="titulo">
 
-<div class="section-title">
+    <h2>
+      🎓 Treinamentos
+    </h2>
 
-<h2>Treinamentos</h2>
+    <p>
+      Capacitação e conscientização dos trabalhadores.
+    </p>
 
-<p>
-Capacitação é uma das principais ferramentas
-de prevenção.
-</p>
+  </div>
 
-</div>
+  <div class="cards">
 
+    <div class="card">
+      <div class="icone">🦺</div>
+      <h3>Uso de EPI</h3>
+      <p>
+        Orientação sobre utilização, conservação e responsabilidade
+        no uso dos equipamentos.
+      </p>
+    </div>
 
-<div class="cards">
+    <div class="card">
+      <div class="icone">🏗️</div>
+      <h3>Trabalho em Altura</h3>
+      <p>
+        Conscientização sobre riscos, prevenção e procedimentos.
+      </p>
+    </div>
 
-<div class="card">
-<h3>🪜 Trabalho em Altura</h3>
-<p>
-Orientação sobre prevenção de quedas,
-uso correto dos equipamentos e procedimentos
-de segurança.
-</p>
-</div>
+    <div class="card">
+      <div class="icone">🚧</div>
+      <h3>Segurança Operacional</h3>
+      <p>
+        Orientações para prevenção de acidentes durante as atividades.
+      </p>
+    </div>
 
-<div class="card">
-<h3>🦺 Utilização de EPI</h3>
-<p>
-Orientação sobre seleção, utilização,
-conservação e responsabilidades relacionadas
-aos EPIs.
-</p>
-</div>
+    <div class="card">
+      <div class="icone">📚</div>
+      <h3>Normas Regulamentadoras</h3>
+      <p>
+        Treinamentos e conscientização relacionados às NRs aplicáveis.
+      </p>
+    </div>
 
-<div class="card">
-<h3>🚜 Operação Segura</h3>
-<p>
-Treinamentos voltados à operação segura
-de equipamentos e máquinas.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-CONTATO
-===================================================== -->
-
-<section class="contact" id="contato">
-
-<div class="container">
-
-<div class="section-title">
-
-<h2>Entre em contato</h2>
-
-<p>
-Fale diretamente com Elisângela.
-</p>
-
-</div>
-
-
-<div class="contact-grid">
-
-<div class="contact-card">
-
-<h3>📱 WhatsApp</h3>
-
-<br>
-
-<a
-href="https://wa.me/5511962876367"
-target="_blank"
->
-Enviar mensagem
-</a>
-
-</div>
-
-
-<div class="contact-card">
-
-<h3>📧 E-mail</h3>
-
-<br>
-
-<a
-href="mailto:elisangela.jr22@gmail.com"
->
-Enviar e-mail
-</a>
-
-</div>
-
-
-<div class="contact-card">
-
-<h3>💼 LinkedIn</h3>
-
-<br>
-
-<a
-href="https://www.linkedin.com/in/elisangela-rodrigues"
-target="_blank"
->
-Meu LinkedIn
-</a>
-
-</div>
-
-
-<div class="contact-card">
-
-<h3>📸 Instagram</h3>
-
-<br>
-
-<a
-href="https://instagram.com/elisangela.jr"
-target="_blank"
->
-Meu Instagram
-</a>
-
-</div>
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
-<!-- =====================================================
-LOGIN
-===================================================== -->
+<!-- =========================
+     DDS / PALESTRAS
+========================= -->
 
-<section id="administracao">
+<section class="secao" id="palestras">
 
-<div class="container">
+  <div class="titulo">
 
-<div class="admin-login" id="loginBox">
+    <h2>
+      🗣️ DDS, Palestras e SIPAT
+    </h2>
 
-<h2>🔐 Administração</h2>
+    <p>
+      Comunicação de segurança para fortalecer a cultura preventiva.
+    </p>
 
-<p>
-Acesso restrito ao responsável pelo sistema.
-</p>
+  </div>
 
-<br>
+  <div class="cards">
+
+    <div class="card">
+      <div class="icone">🗣️</div>
+      <h3>DDS</h3>
+      <p>
+        Diálogo Diário de Segurança com temas rápidos e objetivos.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icone">🎤</div>
+      <h3>Palestras</h3>
+      <p>
+        Palestras de conscientização para diferentes públicos.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icone">📅</div>
+      <h3>SIPAT</h3>
+      <p>
+        Participação e organização de ações para prevenção de acidentes.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icone">🧠</div>
+      <h3>Conscientização</h3>
+      <p>
+        Desenvolvimento da percepção de riscos e comportamento seguro.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     CONTATO
+========================= -->
+
+<section class="contato" id="contato">
+
+  <h2>
+    📞 Entre em contato comigo
+  </h2>
+
+  <p style="margin-top:10px">
+    Estou disponível para informações, treinamentos,
+    palestras e assuntos relacionados à Segurança do Trabalho.
+  </p>
+
+  <div class="contato-botoes">
+
+    <a
+      class="botao"
+      href="https://wa.me/5511962876367"
+      target="_blank"
+      style="background:#25D366"
+    >
+      💬 WhatsApp
+    </a>
+
+    <a
+      class="botao"
+      href="mailto:elisangela.jr22@gmail.com"
+      style="background:#ea4335"
+    >
+      ✉️ E-mail
+    </a>
+
+    <a
+      class="botao"
+      href="https://www.linkedin.com/in/elisangela-rodrigues"
+      target="_blank"
+      style="background:#0a66c2"
+    >
+      🔗 LinkedIn
+    </a>
+
+    <a
+      class="botao"
+      href="https://instagram.com/elisangela.jr"
+      target="_blank"
+      style="background:#E1306C"
+    >
+      📷 Instagram
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     LOGIN ADMIN
+========================= -->
+
+<section
+  class="secao"
+  id="admin"
+>
+
+  <div class="titulo">
+
+    <h2>
+      🔐 Área Administrativa
+    </h2>
+
+    <p>
+      Acesso restrito à gestão do sistema.
+    </p>
+
+  </div>
+
+  <div class="admin-login">
+
+    <label>
+      E-mail
+    </label>
+
+    <input
+      id="adminEmail"
+      type="email"
+      class="campo"
+      placeholder="E-mail cadastrado"
+    >
+
+    <label>
+      Senha
+    </label>
+
+    <input
+      id="adminSenha"
+      type="password"
+      class="campo"
+      placeholder="Senha"
+    >
+
+    <button
+      onclick="entrarAdmin()"
+      class="botao"
+      style="width:100%;background:#071522"
+    >
+      Entrar no Sistema
+    </button>
+
+    <p
+      id="loginMsg"
+      style="margin-top:15px"
+    ></p>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     PAINEL
+========================= -->
+
+<section
+  id="painel"
+  class="secao painel"
+>
+
+  <div class="titulo">
+
+    <h2>
+      ⚙️ Painel de Gestão
+    </h2>
+
+    <p>
+      Gestão de funcionários, EPI, DDS, treinamentos e documentos.
+    </p>
+
+  </div>
+
+
+  <div class="painel-grid">
+
+
+    <!-- EVENTOS -->
+
+    <div class="painel-card span-2">
+
+      <h3>
+        📅 DDS, Palestras e Treinamentos
+      </h3>
+
+      <div class="grid-2">
+
+        <select
+          id="tipoEvento"
+          class="campo"
+        >
+          <option>DDS</option>
+          <option>Palestra</option>
+          <option>SIPAT</option>
+          <option>Treinamento</option>
+        </select>
+
+        <input
+          type="date"
+          id="dataEvento"
+          class="campo"
+        >
+
+        <input
+          id="temaEvento"
+          class="campo"
+          placeholder="Tema / assunto"
+        >
+
+      </div>
+
+      <button
+        onclick="cadastrarEvento()"
+        class="botao"
+      >
+        ➕ Agendar
+      </button>
+
+      <div class="tabela-container">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Data</th>
+              <th>Tema</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+
+          <tbody id="tabelaEventos"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <!-- FUNCIONÁRIOS -->
+
+    <div class="painel-card span-2">
+
+      <h3>
+        👥 Cadastro de Funcionários
+      </h3>
+
+      <div class="grid-2">
+
+        <input
+          id="nomeFuncionario"
+          class="campo"
+          placeholder="Nome completo"
+        >
+
+        <input
+          id="telFuncionario"
+          class="campo"
+          placeholder="Telefone"
+        >
+
+        <input
+          id="emailFuncionario"
+          class="campo"
+          placeholder="E-mail"
+        >
+
+      </div>
+
+      <button
+        onclick="cadastrarFuncionario()"
+        class="botao"
+      >
+        ➕ Cadastrar Funcionário
+      </button>
+
+      <div class="tabela-container">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Nome</th>
+              <th>Telefone</th>
+              <th>E-mail</th>
+              <th>Ficha</th>
+              <th>Ação</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="tabelaFuncionarios"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <!-- SAÍDA DE EPI -->
+
+    <div class="painel-card span-2">
+
+      <h3>
+        📦 Entrega de EPI
+      </h3>
+
+      <select
+        id="almoxFuncionario"
+        class="campo"
+      ></select>
+
+      <div class="grid-2">
+
+        <input
+          id="almoxEPI"
+          class="campo"
+          placeholder="EPI entregue"
+        >
+
+        <input
+          id="almoxCA"
+          class="campo"
+          placeholder="Número do CA"
+        >
+
+        <input
+          id="almoxQualidade"
+          class="campo"
+          placeholder="Quantidade / qualidade"
+        >
+
+      </div>
+
+      <p>
+        <b>✍️ Assinatura do funcionário</b>
+      </p>
+
+      <div class="canvas-container">
+
+        <canvas
+          id="assinaturaCanvas"
+        ></canvas>
+
+      </div>
+
+      <button
+        onclick="limparCanvas()"
+        class="botao"
+        style="background:#777"
+      >
+        🧹 Limpar
+      </button>
+
+      <button
+        onclick="registrarAlmoxarifado()"
+        class="botao"
+      >
+        📦 Registrar Entrega
+      </button>
+
+      <div class="tabela-container">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Data</th>
+              <th>Funcionário</th>
+              <th>EPI</th>
+              <th>CA</th>
+              <th>Assinatura</th>
+              <th>Ação</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="tabelaAlmox"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACEITE -->
+
+    <div class="painel-card">
+
+      <h3>
+        🦺 Aceite / Recusa
+      </h3>
+
+      <select
+        id="selectFuncionario"
+        class="campo"
+      ></select>
+
+      <input
+        id="nomeEPI"
+        class="campo"
+        placeholder="EPI"
+      >
+
+      <select
+        id="statusEPI"
+        class="campo"
+      >
+
+        <option value="ACEITOU">
+          ✅ ACEITOU
+        </option>
+
+        <option value="RECUSOU">
+          ❌ RECUSOU
+        </option>
+
+      </select>
+
+      <button
+        onclick="registrarEPI()"
+        class="botao"
+        style="width:100%"
+      >
+        Registrar
+      </button>
+
+    </div>
+
+
+    <!-- HISTÓRICO -->
+
+    <div class="painel-card">
+
+      <h3>
+        📋 Aceites e Recusas
+      </h3>
+
+      <div class="tabela-container">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Data</th>
+              <th>Funcionário</th>
+              <th>EPI</th>
+              <th>Status</th>
+              <th>Ação</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="tabelaEPIs"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <!-- ASSINATURA -->
+
+    <div class="painel-card span-2">
+
+      <h3>
+        ✍️ Assinatura eletrônica profissional
+      </h3>
+
+      <p style="margin-top:10px">
+
+        O sistema mantém a assinatura desenhada para registro
+        operacional e possui estrutura preparada para fluxo de
+        assinatura eletrônica.
+
+      </p>
+
+      <span class="badge">
+        🔐 Senha GOV.BR nunca é armazenada neste sistema
+      </span>
+
+      <div class="status-assinatura">
+
+        <b>
+          Fluxo planejado:
+        </b>
+
+        <p style="margin-top:8px">
+
+          Funcionário → Documento → Autenticação externa →
+          Assinatura → Retorno ao sistema → Registro →
+          Validação.
+
+        </p>
+
+      </div>
+
+      <button
+        onclick="abrirFichaSelecionada()"
+        class="botao"
+      >
+        📄 Abrir Ficha e Preparar Assinatura
+      </button>
+
+      <p
+        id="assinaturaMsg"
+        style="margin-top:15px"
+      ></p>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     MODAL FICHA
+========================= -->
 
 <div
-id="loginAlert"
-class="alert alert-error"
-></div>
-
-
-<label>E-mail</label>
-
-<input
-type="email"
-id="loginEmail"
-placeholder="Seu e-mail"
+  id="modalFicha"
+  class="modal"
 >
 
+  <div class="modal-box">
 
-<label>Senha</label>
+    <div class="modal-header">
 
-<input
-type="password"
-id="loginPassword"
-placeholder="Sua senha"
->
+      <h2>
+        📄 Ficha Individual do Funcionário
+      </h2>
 
+      <button
+        onclick="fecharFicha()"
+        class="botao fechar"
+      >
+        Fechar
+      </button>
 
-<button
-class="btn-primary"
-style="width:100%"
-onclick="fazerLogin()"
->
-Entrar
-</button>
+    </div>
 
-</div>
+    <div id="conteudoFicha"></div>
 
-</div>
-
-</section>
-
-
-<!-- =====================================================
-PAINEL ADMINISTRATIVO
-===================================================== -->
-
-<section class="admin" id="painelAdmin">
-
-<div class="container">
-
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:30px;
-flex-wrap:wrap;
-gap:10px;
-">
-
-<div>
-
-<h1>
-Painel de Segurança
-</h1>
-
-<p>
-Gestão dos funcionários, EPIs e treinamentos.
-</p>
+  </div>
 
 </div>
-
-<button
-class="btn-danger"
-onclick="sair()"
->
-Sair
-</button>
-
-</div>
-
-
-<!-- DASHBOARD -->
-
-<div class="dashboard">
-
-<div class="stat">
-
-<h3>Funcionários</h3>
-
-<strong id="totalFuncionarios">
-0
-</strong>
-
-</div>
-
-
-<div class="stat">
-
-<h3>EPIs entregues</h3>
-
-<strong id="totalEpis">
-0
-</strong>
-
-</div>
-
-
-<div class="stat">
-
-<h3>Aceites</h3>
-
-<strong id="totalAceites">
-0
-</strong>
-
-</div>
-
-
-<div class="stat">
-
-<h3>Eventos</h3>
-
-<strong id="totalEventos">
-0
-</strong>
-
-</div>
-
-</div>
-
-
-<div class="admin-grid">
-
-
-<!-- =====================================================
-FUNCIONÁRIOS
-===================================================== -->
-
-<div class="admin-card">
-
-<h2>👷 Cadastro de Funcionários</h2>
-
-<div
-id="funcAlert"
-class="alert"
-></div>
-
-
-<label>Nome completo</label>
-
-<input
-id="funcNome"
-type="text"
-placeholder="Nome do funcionário"
->
-
-
-<label>Telefone</label>
-
-<input
-id="funcTel"
-type="text"
-placeholder="Telefone"
->
-
-
-<label>E-mail</label>
-
-<input
-id="funcEmail"
-type="email"
-placeholder="E-mail"
->
-
-
-<button
-class="btn-primary"
-onclick="salvarFuncionario()"
->
-💾 Salvar funcionário
-</button>
-
-<button
-class="btn-secondary hidden"
-id="cancelarEdicao"
-onclick="cancelarEdicaoFuncionario()"
->
-Cancelar
-</button>
-
-<input
-type="hidden"
-id="funcId"
-/>
-
-</div>
-
-
-<!-- =====================================================
-ENTREGA EPI
-===================================================== -->
-
-<div class="admin-card">
-
-<h2>🦺 Entrega de EPI</h2>
-
-<div
-id="epiAlert"
-class="alert"
-></div>
-
-
-<label>Funcionário</label>
-
-<select id="epiFuncionario">
-
-<option value="">
-Selecione o funcionário
-</option>
-
-</select>
-
-
-<label>EPI</label>
-
-<input
-id="epiNome"
-type="text"
-placeholder="Ex.: Capacete de segurança"
->
-
-
-<label>CA</label>
-
-<input
-id="epiCA"
-type="text"
-placeholder="Certificado de Aprovação"
->
-
-
-<label>Data</label>
-
-<input
-id="epiData"
-type="date"
->
-
-
-<label>Qualidade / condição</label>
-
-<select id="epiQualidade">
-
-<option value="Novo">
-Novo
-</option>
-
-<option value="Bom">
-Bom estado
-</option>
-
-<option value="Substituição">
-Substituição
-</option>
-
-</select>
-
-
-<label>Assinatura</label>
-
-<div class="signature-box">
-
-<canvas id="signatureCanvas"></canvas>
-
-</div>
-
-
-<div class="signature-buttons">
-
-<button
-class="btn-secondary"
-onclick="limparAssinatura()"
->
-Limpar
-</button>
-
-<button
-class="btn-primary"
-onclick="salvarEPI()"
->
-Registrar entrega
-</button>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-ACEITE
-===================================================== -->
-
-<div class="admin-card">
-
-<h2>✅ Aceite / Recusa de EPI</h2>
-
-<div
-id="aceiteAlert"
-class="alert"
-></div>
-
-
-<label>Funcionário</label>
-
-<select id="aceiteFuncionario">
-
-<option value="">
-Selecione
-</option>
-
-</select>
-
-
-<label>EPI</label>
-
-<input
-id="aceiteEPI"
-type="text"
-placeholder="Nome do EPI"
->
-
-
-<label>Status</label>
-
-<select id="aceiteStatus">
-
-<option value="ACEITO">
-✅ ACEITO
-</option>
-
-<option value="RECUSADO">
-❌ RECUSADO
-</option>
-
-</select>
-
-
-<label>Data</label>
-
-<input
-id="aceiteData"
-type="date"
->
-
-
-<button
-class="btn-primary"
-onclick="salvarAceite()"
->
-Registrar
-</button>
-
-</div>
-
-
-<!-- =====================================================
-EVENTOS
-===================================================== -->
-
-<div class="admin-card">
-
-<h2>📅 Eventos / Treinamentos</h2>
-
-<div
-id="eventoAlert"
-class="alert"
-></div>
-
-
-<label>Tipo</label>
-
-<select id="eventoTipo">
-
-<option>
-Treinamento
-</option>
-
-<option>
-DDS
-</option>
-
-<option>
-Palestra
-</option>
-
-<option>
-Inspeção
-</option>
-
-<option>
-Reunião
-</option>
-
-</select>
-
-
-<label>Data</label>
-
-<input
-id="eventoData"
-type="date"
->
-
-
-<label>Tema</label>
-
-<input
-id="eventoTema"
-type="text"
-placeholder="Tema do evento"
->
-
-
-<button
-class="btn-primary"
-onclick="salvarEvento()"
->
-Cadastrar evento
-</button>
-
-</div>
-
-</div>
-
-
-<br><br>
-
-
-<!-- =====================================================
-TABELA FUNCIONÁRIOS
-===================================================== -->
-
-<div class="admin-card">
-
-<h2>👷 Funcionários cadastrados</h2>
-
-<input
-id="buscarFuncionario"
-type="text"
-placeholder="🔎 Pesquisar funcionário..."
-oninput="filtrarFuncionarios()"
->
-
-
-<div class="table-container">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>ID</th>
-<th>Nome</th>
-<th>Telefone</th>
-<th>E-mail</th>
-<th>Ações</th>
-
-</tr>
-
-</thead>
-
-<tbody id="tabelaFuncionarios">
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-<br>
-
-
-<!-- =====================================================
-TABELA EPI
-===================================================== -->
-
-<div class="admin-card">
-
-<h2>🦺 Histórico de EPIs</h2>
-
-<div class="table-container">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Data</th>
-<th>Funcionário</th>
-<th>EPI</th>
-<th>CA</th>
-<th>Qualidade</th>
-<th>Assinatura</th>
-
-</tr>
-
-</thead>
-
-<tbody id="tabelaEPI">
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-<br>
-
-
-<!-- =====================================================
-TABELA ACEITES
-===================================================== -->
-
-<div class="admin-card">
-
-<h2>✅ Controle de Aceite / Recusa</h2>
-
-<div class="table-container">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Data</th>
-<th>Funcionário</th>
-<th>EPI</th>
-<th>Status</th>
-
-</tr>
-
-</thead>
-
-<tbody id="tabelaAceites">
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-<br>
-
-
-<!-- =====================================================
-TABELA EVENTOS
-===================================================== -->
-
-<div class="admin-card">
-
-<h2>📅 Eventos cadastrados</h2>
-
-<div class="table-container">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Tipo</th>
-<th>Data</th>
-<th>Tema</th>
-
-</tr>
-
-</thead>
-
-<tbody id="tabelaEventos">
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
 
 
 <footer>
 
-© 2026 Elisângela | Técnica de Segurança do Trabalho
+  <p>
+    © 2026 Elisângela — Técnica de Segurança do Trabalho
+  </p>
 
 </footer>
 
 
 <script>
 
-/* =====================================================
-CONFIGURAÇÃO SUPABASE
-===================================================== */
+/* =========================================================
+   CONFIGURAÇÃO SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
-'https://tqvavpchzdcsgwudileu.supabase.co';
+  "https://tqvavpchzdcsgwudileu.supabase.co";
 
 const SUPABASE_KEY =
-'sb_publishable_ik7CAx549Dy2fj_d8xMrAA_YX8vo3vm';
+  "sb_publishable_ik7CAx549Dy2fj_d8xMrAA_YX8vo3vm";
 
-const _supabase =
-window.supabase.createClient(
+const db =
+  supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
+  );
+
+
+/* =========================================================
+   BACKEND
+========================================================= */
+
+const API_BASE =
+  window.location.origin;
+
+
+/* =========================================================
+   FOTO
+========================================================= */
+
+const fotoInput =
+  document.getElementById("fotoInput");
+
+const fotoPerfil =
+  document.getElementById("fotoPerfil");
+
+
+const fotoPadrao =
+  "data:image/svg+xml;charset=UTF-8," +
+  encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="350"
+         height="440">
+
+      <rect
+        width="100%"
+        height="100%"
+        fill="#dddddd"
+      />
+
+      <text
+        x="50%"
+        y="50%"
+        text-anchor="middle"
+        font-family="Arial"
+        font-size="22"
+        fill="#555"
+      >
+        Sua Foto Aqui
+      </text>
+
+    </svg>
+  `);
+
+
+fotoPerfil.src =
+  localStorage.getItem(
+    "foto_elisangela"
+  ) || fotoPadrao;
+
+
+fotoInput.addEventListener(
+  "change",
+  function(event) {
+
+    const arquivo =
+      event.target.files[0];
+
+    if (!arquivo) {
+      return;
+    }
+
+    const leitor =
+      new FileReader();
+
+    leitor.onload =
+      function(e) {
+
+        fotoPerfil.src =
+          e.target.result;
+
+        localStorage.setItem(
+          "foto_elisangela",
+          e.target.result
+        );
+
+      };
+
+    leitor.readAsDataURL(
+      arquivo
+    );
+
+  }
 );
 
 
-/* =====================================================
-VARIÁVEIS
-===================================================== */
+/* =========================================================
+   LOGIN
+========================================================= */
 
-let funcionarios = [];
+async function entrarAdmin() {
 
-let funcionarioEditando = null;
+  const email =
+    document
+      .getElementById("adminEmail")
+      .value
+      .trim();
+
+  const senha =
+    document
+      .getElementById("adminSenha")
+      .value;
+
+  const msg =
+    document.getElementById(
+      "loginMsg"
+    );
+
+
+  if (!email || !senha) {
+
+    msg.textContent =
+      "Informe e-mail e senha.";
+
+    msg.style.color =
+      "#b00020";
+
+    return;
+  }
+
+
+  const resultado =
+    await db.auth.signInWithPassword({
+
+      email: email,
+
+      password: senha
+
+    });
+
+
+  if (resultado.error) {
+
+    msg.textContent =
+      "Não foi possível entrar. Confira o usuário cadastrado no Supabase Auth.";
+
+    msg.style.color =
+      "#b00020";
+
+    return;
+  }
+
+
+  msg.textContent =
+    "Login realizado com sucesso.";
+
+  msg.style.color =
+    "#198754";
+
+
+  document.getElementById(
+    "admin"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "painel"
+  ).style.display = "block";
+
+
+  await carregarDados();
+
+  setTimeout(
+    ajustarCanvas,
+    300
+  );
+
+}
+
+
+/* =========================================================
+   CARREGAR DADOS
+========================================================= */
+
+async function carregarDados() {
+
+  await carregarFuncionarios();
+
+  await carregarEventos();
+
+  await carregarAlmoxarifado();
+
+  await carregarAceites();
+
+}
+
+
+/* =========================================================
+   FUNCIONÁRIOS
+========================================================= */
+
+async function carregarFuncionarios() {
+
+  const resultado =
+    await db
+      .from("funcionarios")
+      .select("*")
+      .order(
+        "id",
+        {
+          ascending: false
+        }
+      );
+
+
+  if (resultado.error) {
+
+    console.error(
+      resultado.error
+    );
+
+    return;
+  }
+
+
+  const funcionarios =
+    resultado.data || [];
+
+
+  let opcoes =
+    `<option value="">
+      Selecione o funcionário...
+    </option>`;
+
+
+  let linhas = "";
+
+
+  funcionarios.forEach(
+    function(funcionario) {
+
+      opcoes += `
+        <option value="${funcionario.id}">
+          ${escapeHTML(funcionario.nome)}
+        </option>
+      `;
+
+
+      linhas += `
+
+        <tr>
+
+          <td>
+            ${escapeHTML(funcionario.nome)}
+          </td>
+
+          <td>
+            ${escapeHTML(funcionario.tel || "-")}
+          </td>
+
+          <td>
+            ${escapeHTML(funcionario.email || "-")}
+          </td>
+
+          <td>
+
+            <button
+              class="botao"
+              onclick="abrirFichaFuncionario(${funcionario.id})"
+            >
+              📄 Ver ficha
+            </button>
+
+          </td>
+
+          <td>
+
+            <button
+              onclick="deletarRegistro('funcionarios', ${funcionario.id})"
+            >
+              🗑️ Excluir
+            </button>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+  );
+
+
+  document.getElementById(
+    "almoxFuncionario"
+  ).innerHTML = opcoes;
+
+
+  document.getElementById(
+    "selectFuncionario"
+  ).innerHTML = opcoes;
+
+
+  document.getElementById(
+    "tabelaFuncionarios"
+  ).innerHTML = linhas;
+
+}
+
+
+/* =========================================================
+   CADASTRAR FUNCIONÁRIO
+========================================================= */
+
+async function cadastrarFuncionario() {
+
+  const nome =
+    document
+      .getElementById(
+        "nomeFuncionario"
+      )
+      .value
+      .trim();
+
+  const tel =
+    document
+      .getElementById(
+        "telFuncionario"
+      )
+      .value
+      .trim();
+
+  const email =
+    document
+      .getElementById(
+        "emailFuncionario"
+      )
+      .value
+      .trim();
+
+
+  if (!nome) {
+
+    alert(
+      "Digite o nome do funcionário."
+    );
+
+    return;
+  }
+
+
+  const resultado =
+    await db
+      .from("funcionarios")
+      .insert([{
+
+        nome: nome,
+
+        tel: tel,
+
+        email: email
+
+      }]);
+
+
+  if (resultado.error) {
+
+    alert(
+      resultado.error.message
+    );
+
+    return;
+  }
+
+
+  document.getElementById(
+    "nomeFuncionario"
+  ).value = "";
+
+
+  document.getElementById(
+    "telFuncionario"
+  ).value = "";
+
+
+  document.getElementById(
+    "emailFuncionario"
+  ).value = "";
+
+
+  await carregarFuncionarios();
+
+}
+
+
+/* =========================================================
+   EVENTOS
+========================================================= */
+
+async function carregarEventos() {
+
+  const resultado =
+    await db
+      .from("eventos")
+      .select("*")
+      .order(
+        "id",
+        {
+          ascending: false
+        }
+      );
+
+
+  if (resultado.error) {
+    return;
+  }
+
+
+  let html = "";
+
+
+  (resultado.data || [])
+    .forEach(
+      function(evento) {
+
+        html += `
+
+          <tr>
+
+            <td>
+              ${escapeHTML(evento.tipo)}
+            </td>
+
+            <td>
+              ${escapeHTML(evento.data)}
+            </td>
+
+            <td>
+              ${escapeHTML(evento.tema)}
+            </td>
+
+            <td>
+
+              <button
+                onclick="deletarRegistro('eventos', ${evento.id})"
+              >
+                🗑️ Excluir
+              </button>
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    );
+
+
+  document.getElementById(
+    "tabelaEventos"
+  ).innerHTML = html;
+
+}
+
+
+async function cadastrarEvento() {
+
+  const tipo =
+    document.getElementById(
+      "tipoEvento"
+    ).value;
+
+  const data =
+    document.getElementById(
+      "dataEvento"
+    ).value;
+
+  const tema =
+    document.getElementById(
+      "temaEvento"
+    ).value
+    .trim();
+
+
+  if (!data || !tema) {
+
+    alert(
+      "Preencha data e tema."
+    );
+
+    return;
+  }
+
+
+  const dataFormatada =
+    new Date(
+      data + "T00:00:00"
+    ).toLocaleDateString(
+      "pt-BR"
+    );
+
+
+  const resultado =
+    await db
+      .from("eventos")
+      .insert([{
+
+        tipo: tipo,
+
+        data: dataFormatada,
+
+        tema: tema
+
+      }]);
+
+
+  if (resultado.error) {
+
+    alert(
+      resultado.error.message
+    );
+
+    return;
+  }
+
+
+  document.getElementById(
+    "temaEvento"
+  ).value = "";
+
+
+  await carregarEventos();
+
+}
+
+
+/* =========================================================
+   ALMOXARIFADO
+========================================================= */
+
+async function carregarAlmoxarifado() {
+
+  const resultado =
+    await db
+      .from("almoxarifado")
+      .select("*")
+      .order(
+        "id",
+        {
+          ascending: false
+        }
+      );
+
+
+  if (resultado.error) {
+    return;
+  }
+
+
+  let html = "";
+
+
+  (resultado.data || [])
+    .forEach(
+      function(item) {
+
+        html += `
+
+          <tr>
+
+            <td>
+              ${escapeHTML(item.data)}
+            </td>
+
+            <td>
+              ${escapeHTML(item.func)}
+            </td>
+
+            <td>
+              ${escapeHTML(item.epi)}
+            </td>
+
+            <td>
+              ${escapeHTML(item.ca || "-")}
+            </td>
+
+            <td>
+
+              ${
+                item.assinatura
+
+                ?
+
+                `<img
+                  src="${item.assinatura}"
+                  style="max-width:100px;max-height:50px"
+                >`
+
+                :
+
+                "-"
+              }
+
+            </td>
+
+            <td>
+
+              <button
+                onclick="deletarRegistro('almoxarifado', ${item.id})"
+              >
+                🗑️ Excluir
+              </button>
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    );
+
+
+  document.getElementById(
+    "tabelaAlmox"
+  ).innerHTML = html;
+
+}
+
+
+/* =========================================================
+   REGISTRAR EPI
+========================================================= */
+
+async function registrarAlmoxarifado() {
+
+  const funcionarioId =
+    document.getElementById(
+      "almoxFuncionario"
+    ).value;
+
+  const epi =
+    document.getElementById(
+      "almoxEPI"
+    ).value
+    .trim();
+
+  const ca =
+    document.getElementById(
+      "almoxCA"
+    ).value
+    .trim();
+
+  const qualidade =
+    document.getElementById(
+      "almoxQualidade"
+    ).value
+    .trim();
+
+
+  if (
+    !funcionarioId ||
+    !epi
+  ) {
+
+    alert(
+      "Selecione o funcionário e informe o EPI."
+    );
+
+    return;
+  }
+
+
+  if (!temAssinatura()) {
+
+    alert(
+      "O funcionário precisa assinar o quadro."
+    );
+
+    return;
+  }
+
+
+  const funcionario =
+    await db
+      .from("funcionarios")
+      .select("nome")
+      .eq(
+        "id",
+        funcionarioId
+      )
+      .single();
+
+
+  if (funcionario.error) {
+
+    alert(
+      funcionario.error.message
+    );
+
+    return;
+  }
+
+
+  const assinatura =
+    assinaturaCanvas.toDataURL(
+      "image/png"
+    );
+
+
+  const resultado =
+    await db
+      .from("almoxarifado")
+      .insert([{
+
+        data:
+          new Date()
+            .toLocaleDateString(
+              "pt-BR"
+            ),
+
+        func:
+          funcionario.data.nome,
+
+        epi: epi,
+
+        ca: ca,
+
+        qualidade:
+          qualidade,
+
+        assinatura:
+          assinatura,
+
+        funcionario_id:
+          Number(funcionarioId)
+
+      }]);
+
+
+  if (resultado.error) {
+
+    alert(
+      resultado.error.message
+    );
+
+    return;
+  }
+
+
+  document.getElementById(
+    "almoxEPI"
+  ).value = "";
+
+
+  document.getElementById(
+    "almoxCA"
+  ).value = "";
+
+
+  document.getElementById(
+    "almoxQualidade"
+  ).value = "";
+
+
+  limparCanvas();
+
+  await carregarAlmoxarifado();
+
+}
+
+
+/* =========================================================
+   ACEITE / RECUSA
+========================================================= */
+
+async function carregarAceites() {
+
+  const resultado =
+    await db
+      .from("aceites")
+      .select("*")
+      .order(
+        "id",
+        {
+          ascending: false
+        }
+      );
+
+
+  if (resultado.error) {
+    return;
+  }
+
+
+  let html = "";
+
+
+  (resultado.data || [])
+    .forEach(
+      function(item) {
+
+        html += `
+
+          <tr
+            class="${
+              item.status === "RECUSOU"
+              ? "recusa"
+              : ""
+            }"
+          >
+
+            <td>
+              ${escapeHTML(item.data)}
+            </td>
+
+            <td>
+              ${escapeHTML(item.func)}
+            </td>
+
+            <td>
+              ${escapeHTML(item.epi)}
+            </td>
+
+            <td>
+              ${escapeHTML(item.status)}
+            </td>
+
+            <td>
+
+              <button
+                onclick="deletarRegistro('aceites', ${item.id})"
+              >
+                🗑️ Excluir
+              </button>
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    );
+
+
+  document.getElementById(
+    "tabelaEPIs"
+  ).innerHTML = html;
+
+}
+
+
+async function registrarEPI() {
+
+  const funcionarioId =
+    document.getElementById(
+      "selectFuncionario"
+    ).value;
+
+  const epi =
+    document.getElementById(
+      "nomeEPI"
+    ).value
+    .trim();
+
+  const status =
+    document.getElementById(
+      "statusEPI"
+    ).value;
+
+
+  if (
+    !funcionarioId ||
+    !epi
+  ) {
+
+    alert(
+      "Selecione o funcionário e informe o EPI."
+    );
+
+    return;
+  }
+
+
+  const funcionario =
+    await db
+      .from("funcionarios")
+      .select("nome")
+      .eq(
+        "id",
+        funcionarioId
+      )
+      .single();
+
+
+  if (funcionario.error) {
+
+    alert(
+      funcionario.error.message
+    );
+
+    return;
+  }
+
+
+  const resultado =
+    await db
+      .from("aceites")
+      .insert([{
+
+        data:
+          new Date()
+            .toLocaleDateString(
+              "pt-BR"
+            ),
+
+        func:
+          funcionario.data.nome,
+
+        epi:
+          epi,
+
+        status:
+          status,
+
+        funcionario_id:
+          Number(funcionarioId)
+
+      }]);
+
+
+  if (resultado.error) {
+
+    alert(
+      resultado.error.message
+    );
+
+    return;
+  }
+
+
+  document.getElementById(
+    "nomeEPI"
+  ).value = "";
+
+
+  await carregarAceites();
+
+}
+
+
+/* =========================================================
+   FICHA INDIVIDUAL
+========================================================= */
+
+async function abrirFichaFuncionario(id) {
+
+  const funcionario =
+    await db
+      .from("funcionarios")
+      .select("*")
+      .eq(
+        "id",
+        id
+      )
+      .single();
+
+
+  if (funcionario.error) {
+
+    alert(
+      funcionario.error.message
+    );
+
+    return;
+  }
+
+
+  const [epis, aceites] =
+    await Promise.all([
+
+      db
+        .from("almoxarifado")
+        .select("*")
+        .eq(
+          "funcionario_id",
+          id
+        )
+        .order(
+          "id",
+          {
+            ascending: false
+          }
+        ),
+
+      db
+        .from("aceites")
+        .select("*")
+        .eq(
+          "funcionario_id",
+          id
+        )
+        .order(
+          "id",
+          {
+            ascending: false
+          }
+        )
+
+    ]);
+
+
+  const recusas =
+    (aceites.data || [])
+      .filter(
+        item =>
+          item.status === "RECUSOU"
+      )
+      .length;
+
+
+  let historicoEPI = "";
+
+
+  (epis.data || [])
+    .forEach(
+      function(item) {
+
+        historicoEPI += `
+
+          <tr>
+
+            <td>
+              ${escapeHTML(item.data)}
+            </td>
+
+            <td>
+              ${escapeHTML(item.epi)}
+            </td>
+
+            <td>
+              ${escapeHTML(item.ca || "-")}
+            </td>
+
+            <td>
+
+              ${
+                item.assinatura
+
+                ?
+
+                `<img
+                  src="${item.assinatura}"
+                  style="max-width:120px;max-height:55px"
+                >`
+
+                :
+
+                "-"
+              }
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    );
+
+
+  let historicoAceite = "";
+
+
+  (aceites.data || [])
+    .forEach(
+      function(item) {
+
+        historicoAceite += `
+
+          <tr
+            class="${
+              item.status === "RECUSOU"
+              ? "recusa"
+              : ""
+            }"
+          >
+
+            <td>
+              ${escapeHTML(item.data)}
+            </td>
+
+            <td>
+              ${escapeHTML(item.epi)}
+            </td>
+
+            <td>
+              ${escapeHTML(item.status)}
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    );
+
+
+  document.getElementById(
+    "conteudoFicha"
+  ).innerHTML = `
+
+    <div class="ficha-cabecalho">
+
+      <h2>
+        ${escapeHTML(
+          funcionario.data.nome
+        )}
+      </h2>
+
+      <p>
+        <b>ID:</b>
+        ${funcionario.data.id}
+      </p>
+
+      <p>
+        <b>Telefone:</b>
+        ${escapeHTML(
+          funcionario.data.tel || "-"
+        )}
+      </p>
+
+      <p>
+        <b>E-mail:</b>
+        ${escapeHTML(
+          funcionario.data.email || "-"
+        )}
+      </p>
+
+      <div class="ficha-status">
+
+        <b>Status:</b>
+
+        ${
+          recusas
+
+          ?
+
+          `<span class="alerta">
+            ⚠️ ATENÇÃO — POSSUI RECUSA DE EPI
+          </span>`
+
+          :
+
+          `<span class="regular">
+            ✅ REGULAR
+          </span>`
+        }
+
+      </div>
+
+    </div>
+
+
+    <h3 style="margin-top:25px">
+      📦 Histórico de Entrega de EPI
+    </h3>
+
+    <div class="tabela-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Data</th>
+            <th>EPI</th>
+            <th>CA</th>
+            <th>Assinatura</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            historicoEPI ||
+
+            `
+              <tr>
+                <td colspan="4">
+                  Nenhuma entrega registrada.
+                </td>
+              </tr>
+            `
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <h3 style="margin-top:25px">
+      🦺 Aceites e Recusas
+    </h3>
+
+    <div class="tabela-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Data</th>
+            <th>EPI</th>
+            <th>Status</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            historicoAceite ||
+
+            `
+              <tr>
+                <td colspan="3">
+                  Nenhum registro.
+                </td>
+              </tr>
+            `
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <div class="assinatura-profissional">
+
+      <h3>
+        ✍️ Assinatura eletrônica
+      </h3>
+
+      <p style="margin-top:8px">
+
+        Esta ficha pode ser preparada para assinatura
+        eletrônica. A autenticação externa deverá ocorrer
+        fora do formulário do sistema.
+
+      </p>
+
+      <span class="badge">
+        🔐 Nenhuma senha GOV.BR é coletada
+      </span>
+
+      <br>
+
+      <button
+        class="botao"
+        onclick="gerarDocumentoAssinatura(${id})"
+      >
+        📑 Gerar documento para assinatura
+      </button>
+
+      <button
+        class="botao"
+        onclick="imprimirFicha()"
+      >
+        🖨️ Imprimir ficha
+      </button>
+
+      <p
+        id="resultadoDocumento"
+        style="margin-top:12px"
+      ></p>
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "modalFicha"
+  ).style.display = "block";
+
+}
+
+
+/* =========================================================
+   ABRIR FICHA SELECIONADA
+========================================================= */
+
+function abrirFichaSelecionada() {
+
+  const id =
+    document.getElementById(
+      "selectFuncionario"
+    ).value;
+
+
+  if (!id) {
+
+    alert(
+      "Selecione um funcionário primeiro."
+    );
+
+    return;
+  }
+
+
+  abrirFichaFuncionario(
+    Number(id)
+  );
+
+}
+
+
+/* =========================================================
+   DOCUMENTO / ASSINATURA
+========================================================= */
+
+async function gerarDocumentoAssinatura(id) {
+
+  const resultado =
+    document.getElementById(
+      "resultadoDocumento"
+    );
+
+
+  resultado.textContent =
+    "⏳ Preparando documento...";
+
+
+  try {
+
+    const resposta =
+      await fetch(
+        API_BASE +
+        "/api/documentos/ficha/" +
+        id,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json"
+          }
+        }
+      );
+
+
+    const dados =
+      await resposta.json();
+
+
+    if (!resposta.ok) {
+
+      throw new Error(
+        dados.error ||
+        "Não foi possível gerar o documento."
+      );
+
+    }
+
+
+    resultado.innerHTML = `
+
+      <span class="regular">
+        ✅ Documento preparado.
+      </span>
+
+      <br>
+
+      <small>
+        ID do documento:
+        ${escapeHTML(
+          dados.documento_id
+        )}
+      </small>
+
+      <br>
+
+      <small>
+        Hash SHA-256:
+        ${escapeHTML(
+          dados.hash_sha256
+        )}
+      </small>
+
+    `;
+
+
+  } catch (erro) {
+
+    resultado.innerHTML = `
+
+      <span class="alerta">
+        ⚠️ O módulo de assinatura precisa
+        do backend configurado.
+      </span>
+
+    `;
+
+    console.error(
+      erro
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function fecharFicha() {
+
+  document.getElementById(
+    "modalFicha"
+  ).style.display = "none";
+
+}
+
+
+function imprimirFicha() {
+
+  window.print();
+
+}
+
+
+/* =========================================================
+   EXCLUSÃO
+========================================================= */
+
+async function deletarRegistro(
+  tabela,
+  id
+) {
+
+  if (
+    !confirm(
+      "Tem certeza que deseja excluir este registro?"
+    )
+  ) {
+
+    return;
+  }
+
+
+  const resultado =
+    await db
+      .from(tabela)
+      .delete()
+      .eq(
+        "id",
+        id
+      );
+
+
+  if (resultado.error) {
+
+    alert(
+      resultado.error.message
+    );
+
+    return;
+  }
+
+
+  await carregarDados();
+
+}
+
+
+/* =========================================================
+   ASSINATURA DESENHADA
+========================================================= */
+
+const assinaturaCanvas =
+  document.getElementById(
+    "assinaturaCanvas"
+  );
+
+
+const ctx =
+  assinaturaCanvas.getContext(
+    "2d"
+  );
+
 
 let desenhando = false;
 
-let ctx;
+let possuiAssinatura = false;
 
 
-/* =====================================================
-UTILITÁRIOS
-===================================================== */
+function ajustarCanvas() {
 
-function hoje(){
+  assinaturaCanvas.width =
+    assinaturaCanvas.offsetWidth;
 
-    const d = new Date();
-
-    return d.toISOString().split('T')[0];
-
-}
+  assinaturaCanvas.height =
+    assinaturaCanvas.offsetHeight;
 
 
-function mostrarAlerta(id, mensagem, sucesso=true){
+  ctx.lineWidth = 2;
 
-    const el =
-        document.getElementById(id);
+  ctx.lineCap =
+    "round";
 
-    if(!el) return;
+  ctx.lineJoin =
+    "round";
 
-    el.textContent = mensagem;
+  ctx.strokeStyle =
+    "#000080";
 
-    el.className =
-        sucesso
-        ? "alert alert-success"
-        : "alert alert-error";
 
-    el.style.display = "block";
-
-    setTimeout(() => {
-
-        el.style.display = "none";
-
-    },5000);
+  possuiAssinatura =
+    false;
 
 }
 
 
-function escaparHTML(texto){
+function obterPosicao(evento) {
 
-    if(texto === null || texto === undefined)
-        return "";
-
-    return String(texto)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
+  const rect =
+    assinaturaCanvas
+      .getBoundingClientRect();
 
 
-/* =====================================================
-LOGIN SUPABASE AUTH
-===================================================== */
-
-async function fazerLogin(){
-
-    const email =
-        document.getElementById("loginEmail").value.trim();
-
-    const password =
-        document.getElementById("loginPassword").value;
-
-    if(!email || !password){
-
-        mostrarAlerta(
-            "loginAlert",
-            "Digite seu e-mail e sua senha.",
-            false
-        );
-
-        return;
-    }
+  const ponto =
+    evento.touches
+      ? evento.touches[0]
+      : evento;
 
 
-    const {data,error} =
-        await _supabase.auth.signInWithPassword({
+  return {
 
-            email:email,
+    x:
+      ponto.clientX -
+      rect.left,
 
-            password:password
+    y:
+      ponto.clientY -
+      rect.top
 
-        });
-
-
-    if(error){
-
-        console.error(error);
-
-        mostrarAlerta(
-            "loginAlert",
-            "E-mail ou senha incorretos: " +
-            error.message,
-            false
-        );
-
-        return;
-    }
-
-
-    mostrarPainel();
+  };
 
 }
 
 
-async function sair(){
+function iniciarDesenho(evento) {
 
-    await _supabase.auth.signOut();
+  evento.preventDefault();
 
-    document
-        .getElementById("painelAdmin")
-        .style.display="none";
+  desenhando = true;
 
-    document
-        .getElementById("loginBox")
-        .style.display="block";
+  possuiAssinatura = true;
 
-    window.location.hash =
-        "administracao";
 
-}
-
-
-async function verificarLogin(){
-
-    const {
-        data:{
-            session
-        }
-    } =
-        await _supabase.auth.getSession();
-
-
-    if(session){
-
-        mostrarPainel();
-
-    }
-
-}
-
-
-function mostrarPainel(){
-
-    document
-        .getElementById("loginBox")
-        .style.display="none";
-
-    document
-        .getElementById("painelAdmin")
-        .style.display="block";
-
-    carregarTudo();
-
-}
-
-
-/* =====================================================
-FUNCIONÁRIOS
-===================================================== */
-
-async function salvarFuncionario(){
-
-    const nome =
-        document.getElementById("funcNome")
-        .value.trim();
-
-    const tel =
-        document.getElementById("funcTel")
-        .value.trim();
-
-    const email =
-        document.getElementById("funcEmail")
-        .value.trim();
-
-
-    if(!nome){
-
-        mostrarAlerta(
-            "funcAlert",
-            "Digite o nome do funcionário.",
-            false
-        );
-
-        return;
-    }
-
-
-    if(funcionarioEditando){
-
-        const {
-            data,
-            error
-        } =
-            await _supabase
-            .from("funcionarios")
-            .update({
-
-                nome:nome,
-                tel:tel,
-                email:email
-
-            })
-            .eq(
-                "id",
-                funcionarioEditando
-            )
-            .select();
-
-
-        if(error){
-
-            console.error(error);
-
-            mostrarAlerta(
-                "funcAlert",
-                "Erro ao atualizar: " +
-                error.message,
-                false
-            );
-
-            return;
-        }
-
-
-        mostrarAlerta(
-            "funcAlert",
-            "Funcionário atualizado com sucesso!"
-        );
-
-
-        cancelarEdicaoFuncionario();
-
-    }
-
-    else{
-
-        const {
-            data,
-            error
-        } =
-            await _supabase
-            .from("funcionarios")
-            .insert([{
-
-                nome:nome,
-                tel:tel,
-                email:email
-
-            }])
-            .select();
-
-
-        if(error){
-
-            console.error(error);
-
-            mostrarAlerta(
-                "funcAlert",
-                "Erro ao salvar funcionário: " +
-                error.message,
-                false
-            );
-
-            return;
-        }
-
-
-        mostrarAlerta(
-            "funcAlert",
-            "Funcionário cadastrado com sucesso!"
-        );
-
-    }
-
-
-    document.getElementById("funcNome").value="";
-    document.getElementById("funcTel").value="";
-    document.getElementById("funcEmail").value="";
-
-    funcionarioEditando=null;
-
-    document
-        .getElementById("funcId")
-        .value="";
-
-    document
-        .getElementById("cancelarEdicao")
-        .classList.add("hidden");
-
-
-    await carregarFuncionarios();
-
-}
-
-
-function editarFuncionario(id){
-
-    const funcionario =
-        funcionarios.find(
-            f => f.id == id
-        );
-
-
-    if(!funcionario) return;
-
-
-    funcionarioEditando =
-        funcionario.id;
-
-
-    document
-        .getElementById("funcId")
-        .value =
-        funcionario.id;
-
-
-    document
-        .getElementById("funcNome")
-        .value =
-        funcionario.nome || "";
-
-
-    document
-        .getElementById("funcTel")
-        .value =
-        funcionario.tel || "";
-
-
-    document
-        .getElementById("funcEmail")
-        .value =
-        funcionario.email || "";
-
-
-    document
-        .getElementById("cancelarEdicao")
-        .classList.remove("hidden");
-
-
-    window.scrollTo({
-
-        top:
-        document
-        .getElementById("funcNome")
-        .getBoundingClientRect()
-        .top +
-        window.scrollY -
-        120,
-
-        behavior:"smooth"
-
-    });
-
-}
-
-
-function cancelarEdicaoFuncionario(){
-
-    funcionarioEditando=null;
-
-    document
-        .getElementById("funcNome")
-        .value="";
-
-    document
-        .getElementById("funcTel")
-        .value="";
-
-    document
-        .getElementById("funcEmail")
-        .value="";
-
-    document
-        .getElementById("funcId")
-        .value="";
-
-    document
-        .getElementById("cancelarEdicao")
-        .classList.add("hidden");
-
-}
-
-
-async function excluirFuncionario(id){
-
-    const confirmar =
-        confirm(
-            "Deseja realmente excluir este funcionário?"
-        );
-
-
-    if(!confirmar) return;
-
-
-    const {
-        error
-    } =
-        await _supabase
-        .from("funcionarios")
-        .delete()
-        .eq("id",id);
-
-
-    if(error){
-
-        alert(
-            "Erro ao excluir:\n" +
-            error.message
-        );
-
-        return;
-    }
-
-
-    await carregarFuncionarios();
-
-}
-
-
-/* =====================================================
-CARREGAR FUNCIONÁRIOS
-===================================================== */
-
-async function carregarFuncionarios(){
-
-    const {
-        data,
-        error
-    } =
-        await _supabase
-        .from("funcionarios")
-        .select("*")
-        .order(
-            "id",
-            {ascending:false}
-        );
-
-
-    if(error){
-
-        console.error(error);
-
-        mostrarAlerta(
-            "funcAlert",
-            "Erro ao carregar funcionários: " +
-            error.message,
-            false
-        );
-
-        return;
-    }
-
-
-    funcionarios =
-        data || [];
-
-
-    preencherFuncionarios();
-
-
-    renderFuncionarios();
-
-
-    document
-        .getElementById("totalFuncionarios")
-        .textContent =
-        funcionarios.length;
-
-}
-
-
-function preencherFuncionarios(){
-
-    const selects = [
-
-        document
-        .getElementById("epiFuncionario"),
-
-        document
-        .getElementById("aceiteFuncionario")
-
-    ];
-
-
-    selects.forEach(select => {
-
-        const valorAtual =
-            select.value;
-
-
-        select.innerHTML =
-            '<option value="">Selecione o funcionário</option>';
-
-
-        funcionarios.forEach(f => {
-
-            const option =
-                document.createElement("option");
-
-            option.value =
-                f.nome;
-
-            option.textContent =
-                f.nome;
-
-            select.appendChild(option);
-
-        });
-
-
-        select.value =
-            valorAtual;
-
-    });
-
-}
-
-
-/* =====================================================
-RENDER FUNCIONÁRIOS
-===================================================== */
-
-function renderFuncionarios(lista=funcionarios){
-
-    const tabela =
-        document.getElementById(
-            "tabelaFuncionarios"
-        );
-
-
-    tabela.innerHTML="";
-
-
-    lista.forEach(f => {
-
-        const tr =
-            document.createElement("tr");
-
-
-        tr.innerHTML = `
-
-            <td>${f.id}</td>
-
-            <td>
-                <strong>
-                ${escaparHTML(f.nome)}
-                </strong>
-            </td>
-
-            <td>
-                ${escaparHTML(f.tel || "")}
-            </td>
-
-            <td>
-                ${escaparHTML(f.email || "")}
-            </td>
-
-            <td>
-
-                <button
-                    class="btn-primary"
-                    onclick="editarFuncionario(${f.id})"
-                >
-                    Editar
-                </button>
-
-                <button
-                    class="btn-danger"
-                    onclick="excluirFuncionario(${f.id})"
-                >
-                    Excluir
-                </button>
-
-            </td>
-
-        `;
-
-
-        tabela.appendChild(tr);
-
-    });
-
-}
-
-
-function filtrarFuncionarios(){
-
-    const termo =
-        document
-        .getElementById("buscarFuncionario")
-        .value
-        .toLowerCase();
-
-
-    const filtrados =
-        funcionarios.filter(f =>
-
-            (f.nome || "")
-            .toLowerCase()
-            .includes(termo)
-
-        );
-
-
-    renderFuncionarios(filtrados);
-
-}
-
-
-/* =====================================================
-ASSINATURA
-===================================================== */
-
-function prepararCanvas(){
-
-    const canvas =
-        document.getElementById(
-            "signatureCanvas"
-        );
-
-
-    const rect =
-        canvas.getBoundingClientRect();
-
-
-    const ratio =
-        window.devicePixelRatio || 1;
-
-
-    canvas.width =
-        rect.width * ratio;
-
-
-    canvas.height =
-        rect.height * ratio;
-
-
-    ctx =
-        canvas.getContext("2d");
-
-
-    ctx.scale(
-        ratio,
-        ratio
+  const pos =
+    obterPosicao(
+      evento
     );
 
 
-    ctx.lineWidth=2;
+  ctx.beginPath();
 
-    ctx.lineCap="round";
-
-    ctx.lineJoin="round";
-
-
-    function posicao(e){
-
-        const r =
-            canvas.getBoundingClientRect();
-
-        if(e.touches){
-
-            return {
-
-                x:
-                e.touches[0].clientX-r.left,
-
-                y:
-                e.touches[0].clientY-r.top
-
-            };
-
-        }
-
-
-        return {
-
-            x:e.clientX-r.left,
-
-            y:e.clientY-r.top
-
-        };
-
-    }
-
-
-    function iniciar(e){
-
-        e.preventDefault();
-
-        desenhando=true;
-
-        const p =
-            posicao(e);
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            p.x,
-            p.y
-        );
-
-    }
-
-
-    function desenhar(e){
-
-        if(!desenhando)
-            return;
-
-        e.preventDefault();
-
-        const p =
-            posicao(e);
-
-        ctx.lineTo(
-            p.x,
-            p.y
-        );
-
-        ctx.stroke();
-
-    }
-
-
-    function parar(){
-
-        desenhando=false;
-
-    }
-
-
-    canvas.addEventListener(
-        "mousedown",
-        iniciar
-    );
-
-    canvas.addEventListener(
-        "mousemove",
-        desenhar
-    );
-
-    canvas.addEventListener(
-        "mouseup",
-        parar
-    );
-
-    canvas.addEventListener(
-        "mouseleave",
-        parar
-    );
-
-
-    canvas.addEventListener(
-        "touchstart",
-        iniciar,
-        {passive:false}
-    );
-
-    canvas.addEventListener(
-        "touchmove",
-        desenhar,
-        {passive:false}
-    );
-
-    canvas.addEventListener(
-        "touchend",
-        parar
-    );
+  ctx.moveTo(
+    pos.x,
+    pos.y
+  );
 
 }
 
 
-function limparAssinatura(){
+function desenhar(evento) {
 
-    const canvas =
-        document.getElementById(
-            "signatureCanvas"
-        );
-
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-}
+  if (!desenhando) {
+    return;
+  }
 
 
-function assinaturaExiste(){
-
-    const canvas =
-        document.getElementById(
-            "signatureCanvas"
-        );
+  evento.preventDefault();
 
 
-    const pixels =
-        ctx.getImageData(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        ).data;
-
-
-    for(let i=3;i<pixels.length;i+=4){
-
-        if(pixels[i] !== 0){
-
-            return true;
-
-        }
-
-    }
-
-
-    return false;
-
-}
-
-
-/* =====================================================
-EPI
-===================================================== */
-
-async function salvarEPI(){
-
-    const func =
-        document
-        .getElementById("epiFuncionario")
-        .value;
-
-
-    const epi =
-        document
-        .getElementById("epiNome")
-        .value.trim();
-
-
-    const ca =
-        document
-        .getElementById("epiCA")
-        .value.trim();
-
-
-    const data =
-        document
-        .getElementById("epiData")
-        .value ||
-        hoje();
-
-
-    const qualidade =
-        document
-        .getElementById("epiQualidade")
-        .value;
-
-
-    if(!func || !epi){
-
-        mostrarAlerta(
-            "epiAlert",
-            "Informe o funcionário e o EPI.",
-            false
-        );
-
-        return;
-    }
-
-
-    let assinatura="";
-
-
-    if(assinaturaExiste()){
-
-        assinatura =
-            document
-            .getElementById(
-                "signatureCanvas"
-            )
-            .toDataURL(
-                "image/png"
-            );
-
-    }
-
-
-    const {
-        data:resultado,
-        error
-    } =
-        await _supabase
-        .from("almoxarifado")
-        .insert([{
-
-            data:data,
-
-            func:func,
-
-            epi:epi,
-
-            ca:ca,
-
-            qualidade:qualidade,
-
-            assinatura:assinatura
-
-        }])
-        .select();
-
-
-    if(error){
-
-        console.error(error);
-
-        mostrarAlerta(
-            "epiAlert",
-            "Erro ao registrar EPI: " +
-            error.message,
-            false
-        );
-
-        return;
-    }
-
-
-    mostrarAlerta(
-        "epiAlert",
-        "Entrega de EPI registrada com sucesso!"
+  const pos =
+    obterPosicao(
+      evento
     );
 
 
-    document
-        .getElementById("epiNome")
-        .value="";
-
-    document
-        .getElementById("epiCA")
-        .value="";
+  ctx.lineTo(
+    pos.x,
+    pos.y
+  );
 
 
-    limparAssinatura();
+  ctx.stroke();
 
 
-    await carregarEPI();
+  ctx.beginPath();
 
-}
-
-
-/* =====================================================
-ACEITE / RECUSA
-===================================================== */
-
-async function salvarAceite(){
-
-    const func =
-        document
-        .getElementById(
-            "aceiteFuncionario"
-        )
-        .value;
-
-
-    const epi =
-        document
-        .getElementById(
-            "aceiteEPI"
-        )
-        .value.trim();
-
-
-    const status =
-        document
-        .getElementById(
-            "aceiteStatus"
-        )
-        .value;
-
-
-    const data =
-        document
-        .getElementById(
-            "aceiteData"
-        )
-        .value ||
-        hoje();
-
-
-    if(!func || !epi){
-
-        mostrarAlerta(
-            "aceiteAlert",
-            "Informe o funcionário e o EPI.",
-            false
-        );
-
-        return;
-    }
-
-
-    const {
-        data:resultado,
-        error
-    } =
-        await _supabase
-        .from("aceites")
-        .insert([{
-
-            data:data,
-
-            func:func,
-
-            epi:epi,
-
-            status:status
-
-        }])
-        .select();
-
-
-    if(error){
-
-        console.error(error);
-
-        mostrarAlerta(
-            "aceiteAlert",
-            "Erro: " +
-            error.message,
-            false
-        );
-
-        return;
-    }
-
-
-    mostrarAlerta(
-        "aceiteAlert",
-        "Registro realizado com sucesso!"
-    );
-
-
-    document
-        .getElementById("aceiteEPI")
-        .value="";
-
-
-    await carregarAceites();
+  ctx.moveTo(
+    pos.x,
+    pos.y
+  );
 
 }
 
 
-/* =====================================================
-EVENTOS
-===================================================== */
+function pararDesenho() {
 
-async function salvarEvento(){
+  desenhando = false;
 
-    const tipo =
-        document
-        .getElementById("eventoTipo")
-        .value;
-
-
-    const data =
-        document
-        .getElementById("eventoData")
-        .value ||
-        hoje();
-
-
-    const tema =
-        document
-        .getElementById("eventoTema")
-        .value.trim();
-
-
-    if(!tema){
-
-        mostrarAlerta(
-            "eventoAlert",
-            "Informe o tema do evento.",
-            false
-        );
-
-        return;
-    }
-
-
-    const {
-        data:resultado,
-        error
-    } =
-        await _supabase
-        .from("eventos")
-        .insert([{
-
-            tipo:tipo,
-
-            data:data,
-
-            tema:tema
-
-        }])
-        .select();
-
-
-    if(error){
-
-        console.error(error);
-
-        mostrarAlerta(
-            "eventoAlert",
-            "Erro: " +
-            error.message,
-            false
-        );
-
-        return;
-    }
-
-
-    mostrarAlerta(
-        "eventoAlert",
-        "Evento cadastrado com sucesso!"
-    );
-
-
-    document
-        .getElementById("eventoTema")
-        .value="";
-
-
-    await carregarEventos();
+  ctx.beginPath();
 
 }
 
 
-/* =====================================================
-CARREGAR EPI
-===================================================== */
+function limparCanvas() {
 
-async function carregarEPI(){
-
-    const {
-        data,
-        error
-    } =
-        await _supabase
-        .from("almoxarifado")
-        .select("*")
-        .order(
-            "id",
-            {ascending:false}
-        );
+  ctx.clearRect(
+    0,
+    0,
+    assinaturaCanvas.width,
+    assinaturaCanvas.height
+  );
 
 
-    if(error){
-
-        console.error(error);
-
-        return;
-    }
-
-
-    const tabela =
-        document
-        .getElementById(
-            "tabelaEPI"
-        );
-
-
-    tabela.innerHTML="";
-
-
-    (data || []).forEach(item => {
-
-        const tr =
-            document.createElement("tr");
-
-
-        let assinatura =
-            item.assinatura;
-
-
-        if(assinatura){
-
-            assinatura =
-                `<img
-                    src="${assinatura}"
-                    style="
-                    width:100px;
-                    height:40px;
-                    object-fit:contain;
-                    border:1px solid #ddd;
-                    "
-                >`;
-
-        }
-        else{
-
-            assinatura =
-                "Não assinou";
-
-        }
-
-
-        tr.innerHTML = `
-
-            <td>
-                ${escaparHTML(item.data)}
-            </td>
-
-            <td>
-                ${escaparHTML(item.func)}
-            </td>
-
-            <td>
-                ${escaparHTML(item.epi)}
-            </td>
-
-            <td>
-                ${escaparHTML(item.ca)}
-            </td>
-
-            <td>
-                ${escaparHTML(item.qualidade)}
-            </td>
-
-            <td>
-                ${assinatura}
-            </td>
-
-        `;
-
-
-        tabela.appendChild(tr);
-
-    });
-
-
-    document
-        .getElementById("totalEpis")
-        .textContent =
-        (data || []).length;
+  possuiAssinatura =
+    false;
 
 }
 
 
-/* =====================================================
-CARREGAR ACEITES
-===================================================== */
+function temAssinatura() {
 
-async function carregarAceites(){
-
-    const {
-        data,
-        error
-    } =
-        await _supabase
-        .from("aceites")
-        .select("*")
-        .order(
-            "id",
-            {ascending:false}
-        );
-
-
-    if(error){
-
-        console.error(error);
-
-        return;
-    }
-
-
-    const tabela =
-        document
-        .getElementById(
-            "tabelaAceites"
-        );
-
-
-    tabela.innerHTML="";
-
-
-    (data || []).forEach(item => {
-
-        const tr =
-            document.createElement("tr");
-
-
-        const classe =
-            item.status === "ACEITO"
-            ? "badge badge-ok"
-            : "badge badge-no";
-
-
-        tr.innerHTML = `
-
-            <td>
-                ${escaparHTML(item.data)}
-            </td>
-
-            <td>
-                ${escaparHTML(item.func)}
-            </td>
-
-            <td>
-                ${escaparHTML(item.epi)}
-            </td>
-
-            <td>
-                <span class="${classe}">
-                    ${escaparHTML(item.status)}
-                </span>
-            </td>
-
-        `;
-
-
-        tabela.appendChild(tr);
-
-    });
-
-
-    document
-        .getElementById("totalAceites")
-        .textContent =
-        (data || []).length;
+  return possuiAssinatura;
 
 }
 
 
-/* =====================================================
-CARREGAR EVENTOS
-===================================================== */
-
-async function carregarEventos(){
-
-    const {
-        data,
-        error
-    } =
-        await _supabase
-        .from("eventos")
-        .select("*")
-        .order(
-            "id",
-            {ascending:false}
-        );
-
-
-    if(error){
-
-        console.error(error);
-
-        return;
-    }
-
-
-    const tabela =
-        document
-        .getElementById(
-            "tabelaEventos"
-        );
-
-
-    tabela.innerHTML="";
-
-
-    (data || []).forEach(item => {
-
-        const tr =
-            document.createElement("tr");
-
-
-        tr.innerHTML = `
-
-            <td>
-                ${escaparHTML(item.tipo)}
-            </td>
-
-            <td>
-                ${escaparHTML(item.data)}
-            </td>
-
-            <td>
-                ${escaparHTML(item.tema)}
-            </td>
-
-        `;
-
-
-        tabela.appendChild(tr);
-
-    });
-
-
-    document
-        .getElementById("totalEventos")
-        .textContent =
-        (data || []).length;
-
-}
-
-
-/* =====================================================
-FOTO OFICIAL
-===================================================== */
-
-async function carregarFoto(){
-
-    const {
-        data
-    } =
-        _supabase
-        .storage
-        .from("perfil")
-        .getPublicUrl(
-            "elisangela.jpg"
-        );
-
-
-    if(
-        data &&
-        data.publicUrl
-    ){
-
-        document
-        .getElementById(
-            "fotoPerfil"
-        )
-        .src =
-        data.publicUrl +
-        "?t=" +
-        Date.now();
-
-    }
-
-}
-
-
-async function enviarFoto(){
-
-    const input =
-        document
-        .getElementById(
-            "fotoInput"
-        );
-
-
-    const arquivo =
-        input.files[0];
-
-
-    if(!arquivo)
-        return;
-
-
-    if(!arquivo.type.startsWith("image/")){
-
-        alert(
-            "Selecione uma imagem."
-        );
-
-        return;
-    }
-
-
-    if(arquivo.size > 5 * 1024 * 1024){
-
-        alert(
-            "A foto deve ter no máximo 5 MB."
-        );
-
-        return;
-    }
-
-
-    const extensao =
-        arquivo.name
-        .split(".")
-        .pop()
-        .toLowerCase();
-
-
-    const nomeArquivo =
-        "elisangela.jpg";
-
-
-    /*
-    Remove foto anterior,
-    caso exista
-    */
-
-    await _supabase
-        .storage
-        .from("perfil")
-        .remove([
-            nomeArquivo
-        ]);
-
-
-    /*
-    Envia nova foto
-    */
-
-    const {
-        data,
-        error
-    } =
-        await _supabase
-        .storage
-        .from("perfil")
-        .upload(
-            nomeArquivo,
-            arquivo,
-            {
-                upsert:true,
-                contentType:
-                    arquivo.type
-            }
-        );
-
-
-    if(error){
-
-        console.error(error);
-
-        alert(
-            "Erro ao enviar foto:\n\n" +
-            error.message
-        );
-
-        return;
-    }
-
-
-    carregarFoto();
-
-
-    alert(
-        "Foto oficial atualizada com sucesso!"
-    );
-
-}
-
-
-document
-    .getElementById(
-        "fotoInput"
-    )
-    .addEventListener(
-        "change",
-        enviarFoto
-    );
-
-
-/* =====================================================
-CARREGAR TUDO
-===================================================== */
-
-async function carregarTudo(){
-
-    await carregarFuncionarios();
-
-    await carregarEPI();
-
-    await carregarAceites();
-
-    await carregarEventos();
-
-    await carregarFoto();
-
-}
-
-
-/* =====================================================
-INICIALIZAÇÃO
-===================================================== */
-
-document
-    .getElementById("epiData")
-    .value =
-    hoje();
-
-
-document
-    .getElementById("aceiteData")
-    .value =
-    hoje();
-
-
-document
-    .getElementById("eventoData")
-    .value =
-    hoje();
-
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        /*
-        Não reinicializamos
-        automaticamente para
-        não apagar assinatura.
-        */
-
-    }
+assinaturaCanvas.addEventListener(
+  "mousedown",
+  iniciarDesenho
+);
+
+assinaturaCanvas.addEventListener(
+  "mousemove",
+  desenhar
+);
+
+assinaturaCanvas.addEventListener(
+  "mouseup",
+  pararDesenho
+);
+
+assinaturaCanvas.addEventListener(
+  "mouseleave",
+  pararDesenho
+);
+
+
+assinaturaCanvas.addEventListener(
+  "touchstart",
+  iniciarDesenho,
+  {
+    passive: false
+  }
+);
+
+assinaturaCanvas.addEventListener(
+  "touchmove",
+  desenhar,
+  {
+    passive: false
+  }
+);
+
+assinaturaCanvas.addEventListener(
+  "touchend",
+  pararDesenho
 );
 
 
 window.addEventListener(
-    "load",
-    () => {
+  "resize",
+  function() {
 
-        prepararCanvas();
+    if (
+      document.getElementById(
+        "painel"
+      ).style.display === "block"
+    ) {
 
-        verificarLogin();
-
-        carregarFoto();
+      ajustarCanvas();
 
     }
+
+  }
 );
+
+
+/* =========================================================
+   SEGURANÇA CONTRA HTML INJETADO
+========================================================= */
+
+function escapeHTML(valor) {
+
+  return String(
+    valor ?? ""
+  )
+  .replace(
+    /[&<>"']/g,
+    function(caractere) {
+
+      const mapa = {
+
+        "&":
+          "&amp;",
+
+        "<":
+          "&lt;",
+
+        ">":
+          "&gt;",
+
+        '"':
+          "&quot;",
+
+        "'":
+          "&#039;"
+
+      };
+
+
+      return mapa[
+        caractere
+      ];
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   VERIFICAR SESSÃO AO CARREGAR
+========================================================= */
+
+async function verificarSessao() {
+
+  const resultado =
+    await db.auth.getSession();
+
+
+  if (
+    resultado.data.session
+  ) {
+
+    document.getElementById(
+      "admin"
+    ).style.display = "none";
+
+
+    document.getElementById(
+      "painel"
+    ).style.display = "block";
+
+
+    await carregarDados();
+
+
+    setTimeout(
+      ajustarCanvas,
+      300
+    );
+
+  }
+
+}
+
+
+verificarSessao();
 
 </script>
 
 </body>
-
 </html>
+```
